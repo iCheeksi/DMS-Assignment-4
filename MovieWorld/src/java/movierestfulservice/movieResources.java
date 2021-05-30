@@ -29,6 +29,7 @@ public class movieResources {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllMovies(){
         StringBuilder buffer = new StringBuilder();
+        buffer.append("{\"Movies\":");
         buffer.append("[");
         List<Movie> allMovies = moviebean.getMovies();
         for(int i = 0; i < allMovies.size(); i++){
@@ -38,6 +39,7 @@ public class movieResources {
             }
         }
         buffer.append("]");
+        buffer.append("}");
         return buffer.toString();
     }
 }
