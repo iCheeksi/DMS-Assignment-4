@@ -54,10 +54,10 @@ public class Movie {
     
     public String listJSONString(){
         StringBuilder buffer = new StringBuilder();
-        buffer.append("{ \"name\":\"").append(this.getName()).append("\", ");
-        buffer.append("{ \"distributor\":\"").append(this.getDistributor()).append("\", ");
-        buffer.append("{ \"genre\":\"").append(this.getGenre()).append("\", ");
-        buffer.append("{ \"year\":\"").append(this.getYear()).append("\", ");
+        buffer.append("{ \"Name\":\"").append(this.getName()).append("\", ");
+        buffer.append(" \"Distributor\":\"").append(this.getDistributor()).append("\", ");
+        buffer.append(" \"Genre\":\"").append(this.getGenre()).append("\", ");
+        buffer.append(" \"Year\":\"").append(this.getYear()).append("\" } ");
         
         return buffer.toString();
     }
