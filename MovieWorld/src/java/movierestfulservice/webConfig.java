@@ -20,6 +20,7 @@ public class webConfig extends Application{
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(movierestfulservice.MovieDetailsResource.class);
         resources.add(movierestfulservice.movieResources.class);
     }
 }

@@ -5,7 +5,7 @@ package movierestfulservice;
 
 /**
  *
- * @author User
+ * @author Shelby Mun 19049176
  */
 public class Movie {
     private String name, distributor, genre;
