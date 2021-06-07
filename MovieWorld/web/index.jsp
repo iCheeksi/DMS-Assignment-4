@@ -16,7 +16,7 @@
         <p/>
             <a href="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/movies">Get all movies</a>
             <p/>
-            <a href="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/details/Titanic">Get all movie details</a>
+            <a href="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/details/Titanic">Get Titanic movie details</a>
             <p />
     </body>
 </html>
