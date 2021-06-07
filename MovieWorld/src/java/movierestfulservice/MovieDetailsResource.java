@@ -34,9 +34,15 @@ public class MovieDetailsResource {
     public String getMovieDetails(@PathParam("Movie")String movieName){
         StringBuilder buffer = new StringBuilder();
         buffer.append("[ ");
-        List<MovieDetails> details = DetailedBean.getMovieDetailsForMovie(movieName);
+        List<MovieDetails> details = db.getMovieDetailsForMovie(movieName);
         for(int i = 0; i < details.size(); i++){
             buffer.append(details.get(i).listJsonString());
+            if(i != details.size() -1){
+                buffer.append(", ");
+            }
         }
+        buffer.append("]");
+        buffer.append("}");
+        return buffer.toString();
     }
 }
