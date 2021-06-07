@@ -1,0 +1,2 @@
+rootProject.name = "MovieWorldGui"
+include ':app'
