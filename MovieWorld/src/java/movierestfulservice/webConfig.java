@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 /**
  *
- * @author User
+ * @author Shelby Mun 19049176
  */
 @javax.ws.rs.ApplicationPath("movieworldservice")
 public class webConfig extends Application{

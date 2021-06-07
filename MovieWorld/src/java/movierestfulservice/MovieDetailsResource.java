@@ -42,7 +42,6 @@ public class MovieDetailsResource {
             }
         }
         buffer.append("]");
-        buffer.append("}");
         return buffer.toString();
     }
 }
