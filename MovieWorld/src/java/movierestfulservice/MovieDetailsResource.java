@@ -30,8 +30,8 @@ public class MovieDetailsResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{Movie}")
-    public String getMovieDetails(@PathParam("Movie")String movieName){
+    @Path("{movie}")
+    public String getMovieDetails(@PathParam("movie")String movieName){
         StringBuilder buffer = new StringBuilder();
         buffer.append("[ ");
         List<MovieDetails> details = db.getMovieDetailsForMovie(movieName);
