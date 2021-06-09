@@ -11,29 +11,34 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.example.movieworldgui.R;
+import com.example.movieworldgui.SelectedTicketViewModel;
+import com.example.movieworldgui.databinding.FragmentDashboardBinding;
 
 public class DashboardFragment extends Fragment {
 
-    private DashboardViewModel dashboardViewModel;
-
-//    public static DashboardFragment newInstance() {
-//        return new DashboardFragment();
-//    }
+    private SelectedTicketViewModel selectedTicketViewModel;
+    private FragmentDashboardBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        selectedTicketViewModel = new ViewModelProvider(this).get(SelectedTicketViewModel.class);
+
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        final TextView selectedTicket = binding.selectedTicketOne;
+        selectedTicketViewModel.getText().observe(getViewLifecycleOwner(), value -> selectedTicket.setText(value));
+
+        return root;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
-
-
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
-
 }

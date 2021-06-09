@@ -65,7 +65,7 @@ public class OwnedTicketFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(PlaceholderContent.ITEMS, requireParentFragment()));
         }
         return view;
     }

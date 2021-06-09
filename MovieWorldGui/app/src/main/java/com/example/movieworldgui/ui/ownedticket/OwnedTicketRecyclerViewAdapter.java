@@ -1,12 +1,17 @@
 package com.example.movieworldgui.ui.ownedticket;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.movieworldgui.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketBinding;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderContent.PlaceholderItem;
 
@@ -19,9 +24,11 @@ import java.util.List;
 public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTicketRecyclerViewAdapter.ViewHolder> {
 
     private final List<PlaceholderItem> mValues;
+    Fragment parent;
 
-    public OwnedTicketRecyclerViewAdapter(List<PlaceholderItem> items) {
+    public OwnedTicketRecyclerViewAdapter(List<PlaceholderItem> items, Fragment parent) {
         mValues = items;
+        this.parent = parent;
     }
 
     @Override
@@ -36,6 +43,11 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
+
+        holder.mContentView.setOnClickListener(l -> {
+            SelectedTicketViewModel viewModel = new ViewModelProvider(parent).get(SelectedTicketViewModel.class);
+            viewModel.getText().setValue(holder.mContentView.getText().toString());
+        });
     }
 
     @Override
