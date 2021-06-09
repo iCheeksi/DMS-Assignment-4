@@ -1,5 +1,6 @@
 package com.example.movieworldgui.ui.ownedticket.placeholder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +54,7 @@ public class PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    public static class PlaceholderItem {
+    public static class PlaceholderItem implements Serializable {
         public final String id;
         public final String content;
         public final String details;

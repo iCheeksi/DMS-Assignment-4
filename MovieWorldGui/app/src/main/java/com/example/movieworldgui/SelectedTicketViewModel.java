@@ -4,15 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderContent;
+
 public class SelectedTicketViewModel extends ViewModel {
-    private MutableLiveData<String> text;
+    private MutableLiveData<PlaceholderContent.PlaceholderItem> item;
 
     public SelectedTicketViewModel() {
-        text = new MutableLiveData<>();
-        text.setValue(" ");
+        item = new MutableLiveData<>();
+        item.postValue(new PlaceholderContent.PlaceholderItem("","",""));
     }
 
-    public MutableLiveData<String> getText() {
-        return text;
+    public MutableLiveData<PlaceholderContent.PlaceholderItem> getItem() {
+        return item;
     }
 }

@@ -31,7 +31,7 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView selectedTicket = binding.selectedTicketOne;
-        selectedTicketViewModel.getText().observe(getViewLifecycleOwner(), value -> selectedTicket.setText(value));
+        selectedTicketViewModel.getItem().observe(getViewLifecycleOwner(), value -> selectedTicket.setText(value.content));
 
         return root;
     }

@@ -25,10 +25,6 @@ public class OwnedTicketFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public OwnedTicketFragment() {
     }
 
@@ -56,7 +52,6 @@ public class OwnedTicketFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_owned_ticket_list, container, false);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
