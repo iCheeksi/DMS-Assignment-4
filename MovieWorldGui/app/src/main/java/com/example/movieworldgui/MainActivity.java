@@ -11,13 +11,16 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.movieworldgui.databinding.ActivityMainBinding;
+import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
+import com.example.movieworldgui.ui.receiveticket.BluetoothSenderViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
@@ -29,17 +32,27 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
+    private BluetoothSenderViewModel senderViewModel;
+    private SelectedTicketViewModel selectedTicket;
+
+    public void shareTicket(String item) {
+        new Thread(new ServerConnection(item)).start();
+    }
+
+    public void getTicket(BluetoothDevice device) {
+        new Thread((new ClientConnection(device))).start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        senderViewModel = new ViewModelProvider(this).get(BluetoothSenderViewModel.class);
+        selectedTicket = new ViewModelProvider(this).get(SelectedTicketViewModel.class);
 
+        setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -48,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
         } else {
@@ -66,14 +78,6 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(getApplicationContext(), "Please accept the request to use the app", Toast.LENGTH_LONG).show();
         }
-    }
-
-    public void shareTicket(String item) {
-        new Thread(new ServerConnection(item)).start();
-    }
-
-    public void getTicket(BluetoothDevice device) {
-        new Thread((new ClientConnection(device))).start();
     }
 
     private class ServerConnection extends Thread {
@@ -214,5 +218,4 @@ public class MainActivity extends AppCompatActivity {
             }).start();
         }
     }
-
 }

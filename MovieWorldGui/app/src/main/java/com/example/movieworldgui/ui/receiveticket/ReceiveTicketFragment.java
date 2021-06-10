@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.movieworldgui.MainActivity;
-import com.example.movieworldgui.databinding.FragmentNotificationsBinding;
+import com.example.movieworldgui.databinding.FragmentReceiveticketBinding;
 
 import java.util.Set;
 
@@ -35,8 +36,8 @@ import static android.app.Activity.RESULT_CANCELED;
 
 public class ReceiveTicketFragment extends Fragment {
 
-    private BluetoothSenderViewModel notificationsViewModel;
-    private FragmentNotificationsBinding binding;
+    private BluetoothSenderViewModel senderViewModel;
+    private FragmentReceiveticketBinding binding;
     private BluetoothAdapter bluetoothAdapter;
     private MainActivity host;
 
@@ -47,8 +48,8 @@ public class ReceiveTicketFragment extends Fragment {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // is there a better way to check a sender, not just checking the device name
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device.getName().equalsIgnoreCase(notificationsViewModel.getName().getValue())) {
-                    notificationsViewModel.getDevice().setValue(device);
+                if (device.getName().equalsIgnoreCase(senderViewModel.getName().getValue())) {
+                    senderViewModel.getDevice().setValue(device);
                 }
             }
         }
@@ -59,13 +60,17 @@ public class ReceiveTicketFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         host = (MainActivity) getActivity();
-        notificationsViewModel = new ViewModelProvider(this).get(BluetoothSenderViewModel.class);
+        senderViewModel = new ViewModelProvider(getActivity()).get(BluetoothSenderViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentReceiveticketBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getName().observe(getViewLifecycleOwner(), s -> textView.setText("Get ticket from: " + s));
+        final EditText senderName = binding.senderName;
+
+        senderName.setText(senderViewModel.getName().getValue());
+        senderViewModel.getName().observe(getViewLifecycleOwner(), s -> {
+            binding.textNotifications.setText("Get ticket from: " + s);
+        });
 
         binding.getTicket.setOnClickListener(l -> {
 
@@ -82,7 +87,7 @@ public class ReceiveTicketFragment extends Fragment {
             }
         });
 
-        binding.senderName.addTextChangedListener(new TextWatcher() {
+        senderName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -96,9 +101,9 @@ public class ReceiveTicketFragment extends Fragment {
 
                 String value = s.toString();
                 if (!value.isEmpty()) {
-                    notificationsViewModel.getName().setValue(value);
+                    senderViewModel.getName().setValue(value);
                 } else {
-                    notificationsViewModel.getName().setValue("");
+                    senderViewModel.getName().setValue("");
                 }
             }
         });
@@ -123,8 +128,8 @@ public class ReceiveTicketFragment extends Fragment {
     }
 
     private void startConnectionToSender() {
-        String targetDevice = notificationsViewModel.getName().getValue();
-        BluetoothDevice pairedDevice = notificationsViewModel.getDevice().getValue();
+        String targetDevice = senderViewModel.getName().getValue();
+        BluetoothDevice pairedDevice = senderViewModel.getDevice().getValue();
         if (pairedDevice != null && pairedDevice.getName().equalsIgnoreCase(targetDevice)) {
             //we have an existing connection
             host.getTicket(pairedDevice);
@@ -135,7 +140,7 @@ public class ReceiveTicketFragment extends Fragment {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             //reset saved connection
-            notificationsViewModel.getDevice().setValue(null);
+            senderViewModel.getDevice().setValue(null);
             pairedDevice = getPairedDevice(targetDevice, pairedDevices);
         }
 
@@ -146,7 +151,7 @@ public class ReceiveTicketFragment extends Fragment {
         }
 
         // get the ticket from a connected device
-        pairedDevice = notificationsViewModel.getDevice().getValue();
+        pairedDevice = senderViewModel.getDevice().getValue();
         if (pairedDevice != null) {
             host.getTicket(pairedDevice);
         }
@@ -173,7 +178,7 @@ public class ReceiveTicketFragment extends Fragment {
         BluetoothDevice pairedDevice = null;
         for (BluetoothDevice device : pairedDevices) {
             if (device.getName().equalsIgnoreCase(targetDevice)) {
-                notificationsViewModel.getDevice().setValue(device);
+                senderViewModel.getDevice().setValue(device);
                 pairedDevice = device;
             }
             break;

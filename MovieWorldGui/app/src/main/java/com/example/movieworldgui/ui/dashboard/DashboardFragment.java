@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.movieworldgui.MainActivity;
-import com.example.movieworldgui.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentDashboardBinding;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -29,7 +28,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        selectedTicketViewModel = new ViewModelProvider(this).get(SelectedTicketViewModel.class);
+        selectedTicketViewModel = new ViewModelProvider(getActivity()).get(SelectedTicketViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

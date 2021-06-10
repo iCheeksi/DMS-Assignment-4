@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.movieworldgui.SelectedTicketViewModel;
+import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketBinding;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets.TicketItem;
 
@@ -41,7 +41,7 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mContentView.setOnClickListener(l -> {
-            SelectedTicketViewModel viewModel = new ViewModelProvider(parent).get(SelectedTicketViewModel.class);
+            SelectedTicketViewModel viewModel = new ViewModelProvider(parent.getActivity()).get(SelectedTicketViewModel.class);
             viewModel.getItem().setValue(holder.mItem);
         });
     }

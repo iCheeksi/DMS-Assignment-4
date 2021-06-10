@@ -1,4 +1,4 @@
-package com.example.movieworldgui;
+package com.example.movieworldgui.ui.dashboard;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,11 +9,15 @@ public class SelectedTicketViewModel extends ViewModel {
     private MutableLiveData<PlaceholderTickets.TicketItem> item;
 
     public SelectedTicketViewModel() {
-        item = new MutableLiveData<>();
-        item.postValue(new PlaceholderTickets.TicketItem("","",""));
+
     }
 
     public MutableLiveData<PlaceholderTickets.TicketItem> getItem() {
+        if (item == null){
+            item = new MutableLiveData<>();
+            item.postValue(new PlaceholderTickets.TicketItem("","",""));
+        }
+
         return item;
     }
 }

@@ -11,14 +11,25 @@ public class BluetoothSenderViewModel extends ViewModel {
     private MutableLiveData<BluetoothDevice> senderDevice;
 
     public BluetoothSenderViewModel() {
-        senderName = new MutableLiveData<>();
-        senderDevice = new MutableLiveData<>();
-        senderName.setValue("");
-        senderDevice.setValue(null);
+
+
     }
 
     public MutableLiveData<String> getName() {
+        if (senderName == null) {
+            senderName = new MutableLiveData<>();
+            senderName.setValue("");
+        }
+
         return senderName;
     }
-    public MutableLiveData<BluetoothDevice> getDevice() {return senderDevice;}
+
+    public MutableLiveData<BluetoothDevice> getDevice() {
+        if (senderDevice == null) {
+            senderDevice = new MutableLiveData<>();
+            senderDevice.setValue(null);
+        }
+
+        return senderDevice;
+    }
 }
