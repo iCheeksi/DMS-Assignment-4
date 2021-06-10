@@ -12,9 +12,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.movieworldgui.databinding.ActivityMainBinding;
 
+import java.util.UUID;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
