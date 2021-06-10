@@ -1,4 +1,4 @@
-package com.example.movieworldgui.ui.notifications;
+package com.example.movieworldgui.ui.receiveticket;
 
 import android.bluetooth.BluetoothDevice;
 

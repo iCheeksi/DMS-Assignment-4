@@ -10,20 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieworldgui.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketBinding;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderContent.PlaceholderItem;
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets.TicketItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link TicketItem}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTicketRecyclerViewAdapter.ViewHolder> {
 
-    private final List<PlaceholderItem> mValues;
+    private final List<TicketItem> mValues;
     Fragment parent;
 
-    public OwnedTicketRecyclerViewAdapter(List<PlaceholderItem> items, Fragment parent) {
+    public OwnedTicketRecyclerViewAdapter(List<TicketItem> items, Fragment parent) {
         mValues = items;
         this.parent = parent;
     }
@@ -54,7 +54,7 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
-        public PlaceholderItem mItem;
+        public TicketItem mItem;
 
         public ViewHolder(FragmentOwnedTicketBinding binding) {
             super(binding.getRoot());

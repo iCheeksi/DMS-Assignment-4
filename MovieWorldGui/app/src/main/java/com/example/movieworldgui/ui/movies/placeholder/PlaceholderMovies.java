@@ -1,6 +1,5 @@
-package com.example.movieworldgui.ui.ownedticket.placeholder;
+package com.example.movieworldgui.ui.movies.placeholder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,19 +11,19 @@ import java.util.Map;
  * <p>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class PlaceholderContent {
+public class PlaceholderMovies {
 
     /**
      * An array of sample (placeholder) items.
      */
-    public static final List<PlaceholderItem> ITEMS = new ArrayList<PlaceholderItem>();
+    public static final List<MovieItem> ITEMS = new ArrayList<MovieItem>();
 
     /**
      * A map of sample (placeholder) items, by ID.
      */
-    public static final Map<String, PlaceholderItem> ITEM_MAP = new HashMap<String, PlaceholderItem>();
+    public static final Map<String, MovieItem> ITEM_MAP = new HashMap<String, MovieItem>();
 
-    private static final int COUNT = 25;
+    private static final int COUNT = 15;
 
     static {
         // Add some sample items.
@@ -33,18 +32,18 @@ public class PlaceholderContent {
         }
     }
 
-    private static void addItem(PlaceholderItem item) {
+    private static void addItem(MovieItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    private static PlaceholderItem createPlaceholderItem(int position) {
-        return new PlaceholderItem(String.valueOf(position), "Item " + position, makeDetails(position));
+    private static MovieItem createPlaceholderItem(int position) {
+        return new MovieItem(String.valueOf(position), "Movie " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
+        builder.append("Details about Movie: ").append(position);
         for (int i = 0; i < position; i++) {
             builder.append("\nMore details information here.");
         }
@@ -54,12 +53,12 @@ public class PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    public static class PlaceholderItem implements Serializable {
+    public static class MovieItem {
         public final String id;
         public final String content;
         public final String details;
 
-        public PlaceholderItem(String id, String content, String details) {
+        public MovieItem(String id, String content, String details) {
             this.id = id;
             this.content = content;
             this.details = details;

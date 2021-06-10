@@ -1,4 +1,4 @@
-package com.example.movieworldgui.ui.notifications;
+package com.example.movieworldgui.ui.receiveticket;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
@@ -28,20 +28,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.databinding.FragmentNotificationsBinding;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Set;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 
 
-public class BluetoothFragment extends Fragment {
+public class ReceiveTicketFragment extends Fragment {
 
     private BluetoothSenderViewModel notificationsViewModel;
     private FragmentNotificationsBinding binding;
     private BluetoothAdapter bluetoothAdapter;
-    private boolean bluetoothRequestAccepted;
     private MainActivity host;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

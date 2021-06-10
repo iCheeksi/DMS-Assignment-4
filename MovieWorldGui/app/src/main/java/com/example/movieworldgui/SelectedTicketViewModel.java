@@ -1,20 +1,19 @@
 package com.example.movieworldgui;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderContent;
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 public class SelectedTicketViewModel extends ViewModel {
-    private MutableLiveData<PlaceholderContent.PlaceholderItem> item;
+    private MutableLiveData<PlaceholderTickets.TicketItem> item;
 
     public SelectedTicketViewModel() {
         item = new MutableLiveData<>();
-        item.postValue(new PlaceholderContent.PlaceholderItem("","",""));
+        item.postValue(new PlaceholderTickets.TicketItem("","",""));
     }
 
-    public MutableLiveData<PlaceholderContent.PlaceholderItem> getItem() {
+    public MutableLiveData<PlaceholderTickets.TicketItem> getItem() {
         return item;
     }
 }

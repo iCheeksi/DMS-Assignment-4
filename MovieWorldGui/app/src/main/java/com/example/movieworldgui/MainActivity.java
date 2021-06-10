@@ -9,10 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderContent;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,8 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.movieworldgui.databinding.ActivityMainBinding;
-
-import org.jetbrains.annotations.NotNull;
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -195,13 +191,13 @@ public class MainActivity extends AppCompatActivity {
 
                             if (message instanceof String) {
                                 // TODO - send this to the api
-                                int count = PlaceholderContent.ITEMS.size();
+                                int count = PlaceholderTickets.ITEMS.size();
 
-                                PlaceholderContent.PlaceholderItem newItem =
-                                        new PlaceholderContent.PlaceholderItem(String.valueOf(count), (String) message, "details about " + message);
+                                PlaceholderTickets.TicketItem newItem =
+                                        new PlaceholderTickets.TicketItem(String.valueOf(count), (String) message, "details about " + message);
 
-                                PlaceholderContent.ITEMS.add(newItem);
-                                PlaceholderContent.ITEM_MAP.put(newItem.id, newItem);
+                                PlaceholderTickets.ITEMS.add(newItem);
+                                PlaceholderTickets.ITEM_MAP.put(newItem.id, newItem);
                             }
                             closeConnection();
                             break;

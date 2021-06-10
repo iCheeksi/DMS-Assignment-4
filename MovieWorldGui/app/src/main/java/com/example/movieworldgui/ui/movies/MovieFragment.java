@@ -1,4 +1,4 @@
-package com.example.movieworldgui.ui.ownedticket;
+package com.example.movieworldgui.ui.movies;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,25 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.movieworldgui.R;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
+import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
 
 /**
  * A fragment representing a list of Items.
  */
-public class OwnedTicketFragment extends Fragment {
+public class MovieFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    public OwnedTicketFragment() {
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public MovieFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static OwnedTicketFragment newInstance(int columnCount) {
-        OwnedTicketFragment fragment = new OwnedTicketFragment();
+    public static MovieFragment newInstance(int columnCount) {
+        MovieFragment fragment = new MovieFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -50,8 +54,9 @@ public class OwnedTicketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_owned_ticket_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
 
+        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -60,7 +65,7 @@ public class OwnedTicketFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(PlaceholderTickets.ITEMS, requireParentFragment()));
+            recyclerView.setAdapter(new MovieRecyclerViewAdapter(PlaceholderMovies.ITEMS));
         }
         return view;
     }
