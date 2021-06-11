@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.databinding.FragmentDashboardBinding;
+import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -30,16 +31,25 @@ public class DashboardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         selectedTicketViewModel = new ViewModelProvider(requireActivity()).get(SelectedTicketViewModel.class);
+        OwnedTicketViewModel ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         MainActivity host = (MainActivity) getActivity();
 
         final TextView selectedTicket = binding.selectedTicketOne;
-        selectedTicketViewModel.getItem().observe(getViewLifecycleOwner(), value -> selectedTicket.setText(value.content));
+        selectedTicketViewModel.getItem().observe(getViewLifecycleOwner(), value -> {
+
+            if (value != null) {
+                selectedTicket.setText(value.content);
+            } else {
+                selectedTicket.setText("");
+            }
+        });
 
         binding.shareTicket.setOnClickListener(l -> {
 
-            if (selectedTicket.getText().length() <=0) return;
+            PlaceholderTickets.TicketItem sharedTicket = selectedTicketViewModel.getItem().getValue();
+            if (sharedTicket == null || sharedTicket.id.length() <= 0) return;
 
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -53,18 +63,19 @@ public class DashboardFragment extends Fragment {
                 serveBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
                 startActivityForResult(serveBluetooth, 1);
             } else {
-                shareTicket();
+                shareTicket(sharedTicket);
             }
         });
 
         binding.useTicket.setOnClickListener(l -> {
 
             PlaceholderTickets.TicketItem usedTicket = selectedTicketViewModel.getItem().getValue();
-            if (usedTicket.id.length() <= 0) return;
+            if (usedTicket == null || usedTicket.id.length() <= 0) return;
 
             PlaceholderTickets.ITEMS.remove(usedTicket);
-            PlaceholderTickets.ITEM_MAP.remove(usedTicket.id,usedTicket);
+            PlaceholderTickets.ITEM_MAP.remove(usedTicket.id, usedTicket);
 
+            ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
             selectedTicketViewModel.getItem().setValue(null);
 
             host.sendToastMessage("Ticket used successfully.");
@@ -78,8 +89,12 @@ public class DashboardFragment extends Fragment {
 
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(getActivity().getApplicationContext(), "Please accept the request to use the app", Toast.LENGTH_LONG).show();
-        }else {
-            shareTicket();
+        } else {
+
+            PlaceholderTickets.TicketItem sharedTicket = selectedTicketViewModel.getItem().getValue();
+            if (sharedTicket == null || sharedTicket.id.length() <= 0) return;
+            
+            shareTicket(sharedTicket);
         }
     }
 
@@ -89,8 +104,8 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void shareTicket() {
+    private void shareTicket(PlaceholderTickets.TicketItem sharedTicket) {
         MainActivity host = (MainActivity) getActivity();
-        host.shareTicket(selectedTicketViewModel.getItem().getValue());
+        host.shareTicket(sharedTicket);
     }
 }

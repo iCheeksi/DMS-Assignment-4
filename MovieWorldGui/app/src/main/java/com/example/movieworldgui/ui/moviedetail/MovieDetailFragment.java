@@ -17,6 +17,7 @@ import com.example.movieworldgui.R;
 import com.example.movieworldgui.databinding.FragmentMovieDetailBinding;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
+import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import java.util.UUID;
@@ -30,6 +31,7 @@ public class MovieDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
+        OwnedTicketViewModel ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
         selectedMovieViewModel = new ViewModelProvider(requireActivity()).get(SelectedMovieViewModel.class);
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -48,6 +50,7 @@ public class MovieDetailFragment extends Fragment {
             //TODO - send it off to the api. create a toast depending on the result of api request
             PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.content + " ticket", item.details);
             PlaceholderTickets.addItem(newTicket);
+            ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
 
             MainActivity host = (MainActivity) getActivity();
             host.sendToastMessage("Ticket bought successfully");

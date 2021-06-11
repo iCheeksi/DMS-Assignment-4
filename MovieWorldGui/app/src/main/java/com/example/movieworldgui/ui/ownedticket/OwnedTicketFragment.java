@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.movieworldgui.R;
+import com.example.movieworldgui.databinding.FragmentOwnedTicketListBinding;
+import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 /**
@@ -24,6 +27,7 @@ public class OwnedTicketFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private OwnedTicketViewModel ownedTickets;
 
     public OwnedTicketFragment() {
     }
@@ -50,18 +54,24 @@ public class OwnedTicketFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_owned_ticket_list, container, false);
 
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
+        FragmentOwnedTicketListBinding binding = FragmentOwnedTicketListBinding.inflate(inflater,container,false);
+        View root = binding.getRoot();
+
+        if (root instanceof RecyclerView) {
+            Context context = root.getContext();
+            RecyclerView recyclerView = (RecyclerView) root;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(PlaceholderTickets.ITEMS, requireParentFragment()));
+
+            ownedTickets.getItems().observe(getViewLifecycleOwner(), a -> {
+                recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(a, requireParentFragment()));
+            });
         }
-        return view;
+        return root;
     }
 }
