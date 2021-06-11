@@ -1,6 +1,8 @@
 package com.example.movieworldgui.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.util.UUID;
 public class HomeFragment extends Fragment {
 
     private SelectedMovieViewModel selectedMovieViewModel;
+    private ServerAddressViewModel serverAddressViewModel;
     private FragmentHomeBinding binding;
 
     @Override
@@ -31,6 +34,7 @@ public class HomeFragment extends Fragment {
 
         OwnedTicketViewModel ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
         selectedMovieViewModel = new ViewModelProvider(requireActivity()).get(SelectedMovieViewModel.class);
+        serverAddressViewModel = new ViewModelProvider(requireActivity()).get(ServerAddressViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -43,7 +47,7 @@ public class HomeFragment extends Fragment {
 
             //TODO - send it off to the api. create a toast depending on the result of api request
             PlaceholderMovies.MovieItem item = selectedMovieViewModel.getItem().getValue();
-            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(),item.content + " ticket",item.details);
+            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.content + " ticket", item.details);
             PlaceholderTickets.addItem(newTicket);
             ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
 
@@ -56,6 +60,37 @@ public class HomeFragment extends Fragment {
             if (textView.getText().length() <= 0) return;
 
             Navigation.findNavController(l).navigate(R.id.action_navigation_home_to_movieDetailFragment);
+        });
+
+        binding.serverConnect.setOnClickListener(l -> {
+            if (serverAddressViewModel.getAddress().getValue().isEmpty()) return;
+
+            //TODO - connect to api
+            binding.serverConnect.setEnabled(false);
+            binding.serverNameText.setEnabled(false);
+        });
+
+        binding.serverNameText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String value = s.toString();
+                if (!value.isEmpty()) {
+                    serverAddressViewModel.getAddress().setValue(value);
+                } else {
+                    serverAddressViewModel.getAddress().setValue("");
+                }
+            }
         });
 
         return root;
