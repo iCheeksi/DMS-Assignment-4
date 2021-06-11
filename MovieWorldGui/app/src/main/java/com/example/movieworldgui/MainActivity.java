@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,12 +31,22 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
 
-    public void shareTicket(String item) {
+    public void shareTicket(PlaceholderTickets.TicketItem item) {
         new Thread(new ServerConnection(item)).start();
     }
 
     public void getTicket(BluetoothDevice device) {
         new Thread((new ClientConnection(device))).start();
+    }
+
+    public void sendToastMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void sendToastFromChildThread(String message){
+        Looper.prepare();
+        sendToastMessage(message);
+        Looper.loop();
     }
 
     @Override
@@ -55,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
-            Toast.makeText(this, "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
+            sendToastFromChildThread("Your device has no bluetooth support");
         } else {
             if (!bluetoothAdapter.isEnabled()) {
                 Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -69,15 +80,15 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getApplicationContext(), "Please accept the request to use the app", Toast.LENGTH_LONG).show();
+            sendToastFromChildThread("Please accept the request to use the app");
         }
     }
 
     private class ServerConnection extends Thread {
         private final BluetoothServerSocket serverSocket;
-        private final String sentItem;
+        private final PlaceholderTickets.TicketItem sentItem;
 
-        public ServerConnection(String item) {
+        public ServerConnection(PlaceholderTickets.TicketItem item) {
 
             sentItem = item;
             BluetoothServerSocket temp = null;
@@ -87,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 temp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("MovieWorldApp", appBlueToothID);
             } catch (IOException e) {
                 Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong when we were setting up the bluetooth connection", e);
+                sendToastFromChildThread("Sorry something went wrong when we were setting up the bluetooth connection");
             }
             serverSocket = temp;
         }
@@ -108,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     Log.e(MainActivity.class.getSimpleName(), "Sorry the other device was unable to connect ", e);
+                    sendToastFromChildThread("Sorry the other device was unable to connect");
+                    closeConnection();
                     break;
                 }
             }
@@ -121,15 +135,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        private void sendMessage(BluetoothSocket socket, String item) {
+        private void sendMessage(BluetoothSocket socket, PlaceholderTickets.TicketItem item) {
 
             new Thread(() -> {
                 try {
                     ObjectOutputStream clientOutput = new ObjectOutputStream(socket.getOutputStream());
                     clientOutput.writeObject(item);
+                    sendToastFromChildThread("Ticket sent successfully.");
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    sendToastFromChildThread("Sorry we weren't able to send the ticket this time.");
                 }
             }).start();
         }
@@ -147,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 temp = sendingDevice.createRfcommSocketToServiceRecord(appBlueToothID);
             } catch (IOException e) {
                 Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong when we were setting up the bluetooth connection", e);
+                sendToastFromChildThread("Sorry something went wrong when we were setting up the bluetooth connection");
             }
 
             socket = temp;
@@ -160,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 if (socket != null) socket.connect();
             } catch (IOException connException) {
                 Log.e(MainActivity.class.getSimpleName(), "Sorry we can't connect to the other device", connException);
+                sendToastFromChildThread("Sorry we can't connect to the other device");
                 closeConnection();
 
                 return;
@@ -186,21 +205,22 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Object message = input.readObject();
 
-                            if (message instanceof String) {
+                            if (message instanceof PlaceholderTickets.TicketItem) {
                                 // TODO - send this to the api
-                                int count = PlaceholderTickets.ITEMS.size();
+                                PlaceholderTickets.TicketItem temp = (PlaceholderTickets.TicketItem) message;
 
-                                PlaceholderTickets.TicketItem newItem =
-                                        new PlaceholderTickets.TicketItem(String.valueOf(count), (String) message, "details about " + message);
+                                PlaceholderTickets.TicketItem newTicket =
+                                        new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), temp.content, temp.details);
+                                PlaceholderTickets.addItem(newTicket);
 
-                                PlaceholderTickets.ITEMS.add(newItem);
-                                PlaceholderTickets.ITEM_MAP.put(newItem.id, newItem);
+                                sendToastFromChildThread("Shared ticket received successfully.");
                             }
                             closeConnection();
                             break;
 
                         } catch (ClassNotFoundException e) {
                             Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong while we were getting the shared ticket", e);
+                            sendToastFromChildThread("Sorry we can't get the shared ticket this time.");
                         }
                     }
 

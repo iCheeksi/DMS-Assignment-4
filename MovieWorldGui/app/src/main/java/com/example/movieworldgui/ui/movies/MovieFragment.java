@@ -65,7 +65,7 @@ public class MovieFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MovieRecyclerViewAdapter(PlaceholderMovies.ITEMS));
+            recyclerView.setAdapter(new MovieRecyclerViewAdapter(PlaceholderMovies.ITEMS,requireParentFragment()));
         }
         return view;
     }

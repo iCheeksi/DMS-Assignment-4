@@ -13,7 +13,7 @@ public class SelectedMovieViewModel extends ViewModel {
     public SelectedMovieViewModel() {
     }
 
-    public LiveData<PlaceholderMovies.MovieItem> getText() {
+    public MutableLiveData<PlaceholderMovies.MovieItem> getItem() {
 
         if (movie == null){
             movie = new MutableLiveData<>();

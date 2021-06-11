@@ -16,7 +16,6 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link TicketItem}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTicketRecyclerViewAdapter.ViewHolder> {
 
@@ -37,7 +36,6 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mContentView.setOnClickListener(l -> {
@@ -52,13 +50,11 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
         public final TextView mContentView;
         public TicketItem mItem;
 
         public ViewHolder(FragmentOwnedTicketBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
             mContentView = binding.content;
         }
 

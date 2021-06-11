@@ -28,7 +28,7 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        selectedTicketViewModel = new ViewModelProvider(getActivity()).get(SelectedTicketViewModel.class);
+        selectedTicketViewModel = new ViewModelProvider(requireActivity()).get(SelectedTicketViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -41,7 +41,7 @@ public class DashboardFragment extends Fragment {
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if (bluetoothAdapter == null) {
-                Toast.makeText(getActivity().getApplicationContext(), "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireActivity().getApplicationContext(), "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
                 return; // no bluetooth support
             }
 
@@ -75,6 +75,6 @@ public class DashboardFragment extends Fragment {
 
     private void shareTicket() {
         MainActivity host = (MainActivity) getActivity();
-        host.shareTicket(selectedTicketViewModel.getItem().getValue().content);
+        host.shareTicket(selectedTicketViewModel.getItem().getValue());
     }
 }

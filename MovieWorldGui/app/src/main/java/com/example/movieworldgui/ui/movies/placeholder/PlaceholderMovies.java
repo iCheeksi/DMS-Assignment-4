@@ -1,9 +1,11 @@
 package com.example.movieworldgui.ui.movies.placeholder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -28,25 +30,23 @@ public class PlaceholderMovies {
     static {
         // Add some sample items.
         for (int i = 1; i <= COUNT; i++) {
-            addItem(createPlaceholderItem(i));
+            addItem(createPlaceholderItem(UUID.randomUUID().toString(), i));
         }
     }
 
-    private static void addItem(MovieItem item) {
+    public static void addItem(MovieItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    private static MovieItem createPlaceholderItem(int position) {
-        return new MovieItem(String.valueOf(position), "Movie " + position, makeDetails(position));
+    private static MovieItem createPlaceholderItem(String id, int position) {
+        return new MovieItem(id, "Movie " + position, makeDetails(position));
     }
 
     private static String makeDetails(int position) {
         StringBuilder builder = new StringBuilder();
         builder.append("Details about Movie: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
+
         return builder.toString();
     }
 

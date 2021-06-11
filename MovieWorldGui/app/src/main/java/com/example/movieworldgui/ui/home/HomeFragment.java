@@ -9,8 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.example.movieworldgui.R;
 import com.example.movieworldgui.databinding.FragmentHomeBinding;
+import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
+
+import java.util.UUID;
 
 public class HomeFragment extends Fragment {
 
@@ -19,13 +25,25 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        selectedMovieViewModel = new ViewModelProvider(getActivity()).get(SelectedMovieViewModel.class);
 
+        selectedMovieViewModel = new ViewModelProvider(requireActivity()).get(SelectedMovieViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.selectedMovie;
-        selectedMovieViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s.content));
+        selectedMovieViewModel.getItem().observe(getViewLifecycleOwner(), s -> textView.setText(s.content));
+
+        binding.buyTicket.setOnClickListener(l -> {
+
+            //TODO - send it off to the api. create a toast depending on the result of api request
+            PlaceholderMovies.MovieItem item = selectedMovieViewModel.getItem().getValue();
+            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(),item.content + " ticket",item.details);
+            PlaceholderTickets.addItem(newTicket);
+        });
+
+        binding.viewDetails.setOnClickListener(l -> {
+            Navigation.findNavController(l).navigate(R.id.action_navigation_home_to_movieDetailFragment);
+        });
 
         return root;
     }
