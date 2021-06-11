@@ -33,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void shareTicket(PlaceholderTickets.TicketItem item) {
         new Thread(new ServerConnection(item)).start();
+        sendToastMessage("Sending ticket.");
     }
 
     public void getTicket(BluetoothDevice device) {
         new Thread((new ClientConnection(device))).start();
+        sendToastMessage("Receiving ticket.");
     }
 
     public void sendToastMessage(String message){

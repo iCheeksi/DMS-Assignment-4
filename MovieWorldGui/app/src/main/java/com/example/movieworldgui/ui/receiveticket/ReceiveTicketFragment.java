@@ -61,7 +61,6 @@ public class ReceiveTicketFragment extends Fragment {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         host = (MainActivity) getActivity();
         senderViewModel = new ViewModelProvider(requireActivity()).get(BluetoothSenderViewModel.class);
-
         binding = FragmentReceiveticketBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -74,8 +73,10 @@ public class ReceiveTicketFragment extends Fragment {
 
         binding.getTicket.setOnClickListener(l -> {
 
+            if (senderName.getText().length() <=0) return;
+
             if (bluetoothAdapter == null) {
-                Toast.makeText(requireContext().getApplicationContext(), "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
+                host.sendToastMessage("Your device has no bluetooth support");
                 return; // no bluetooth support
             }
 
@@ -115,7 +116,7 @@ public class ReceiveTicketFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
 
         if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(requireActivity().getApplicationContext(), "Please accept the request to use the app", Toast.LENGTH_LONG).show();
+            host.sendToastMessage("Please accept the request to use the app");
         } else {
             startConnectionToSender();
         }
@@ -154,6 +155,8 @@ public class ReceiveTicketFragment extends Fragment {
         pairedDevice = senderViewModel.getDevice().getValue();
         if (pairedDevice != null) {
             host.getTicket(pairedDevice);
+        }else{
+            host.sendToastMessage("Sorry we can't connect to the ticket sender");
         }
     }
 

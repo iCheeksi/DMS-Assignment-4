@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.R;
 import com.example.movieworldgui.databinding.FragmentMovieDetailBinding;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
@@ -47,6 +48,9 @@ public class MovieDetailFragment extends Fragment {
             //TODO - send it off to the api. create a toast depending on the result of api request
             PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.content + " ticket", item.details);
             PlaceholderTickets.addItem(newTicket);
+
+            MainActivity host = (MainActivity) getActivity();
+            host.sendToastMessage("Ticket bought successfully");
         });
 
         binding.backHome.setOnClickListener(l -> {

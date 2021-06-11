@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.databinding.FragmentDashboardBinding;
+import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -29,19 +30,21 @@ public class DashboardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         selectedTicketViewModel = new ViewModelProvider(requireActivity()).get(SelectedTicketViewModel.class);
-
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        MainActivity host = (MainActivity) getActivity();
 
         final TextView selectedTicket = binding.selectedTicketOne;
         selectedTicketViewModel.getItem().observe(getViewLifecycleOwner(), value -> selectedTicket.setText(value.content));
 
         binding.shareTicket.setOnClickListener(l -> {
 
+            if (selectedTicket.getText().length() <=0) return;
+
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if (bluetoothAdapter == null) {
-                Toast.makeText(requireActivity().getApplicationContext(), "Your device has no bluetooth support", Toast.LENGTH_LONG).show();
+                host.sendToastMessage("Your device has no bluetooth support");
                 return; // no bluetooth support
             }
 
@@ -52,6 +55,19 @@ public class DashboardFragment extends Fragment {
             } else {
                 shareTicket();
             }
+        });
+
+        binding.useTicket.setOnClickListener(l -> {
+
+            PlaceholderTickets.TicketItem usedTicket = selectedTicketViewModel.getItem().getValue();
+            if (usedTicket.id.length() <= 0) return;
+
+            PlaceholderTickets.ITEMS.remove(usedTicket);
+            PlaceholderTickets.ITEM_MAP.remove(usedTicket.id,usedTicket);
+
+            selectedTicketViewModel.getItem().setValue(null);
+
+            host.sendToastMessage("Ticket used successfully.");
         });
 
         return root;

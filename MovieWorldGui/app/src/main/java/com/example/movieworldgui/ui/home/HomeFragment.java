@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.R;
 import com.example.movieworldgui.databinding.FragmentHomeBinding;
 import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
@@ -35,13 +36,21 @@ public class HomeFragment extends Fragment {
 
         binding.buyTicket.setOnClickListener(l -> {
 
+            if (textView.getText().length() <= 0) return;
+
             //TODO - send it off to the api. create a toast depending on the result of api request
             PlaceholderMovies.MovieItem item = selectedMovieViewModel.getItem().getValue();
             PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(),item.content + " ticket",item.details);
             PlaceholderTickets.addItem(newTicket);
+
+            MainActivity host = (MainActivity) getActivity();
+            host.sendToastMessage("Ticket bought successfully");
         });
 
         binding.viewDetails.setOnClickListener(l -> {
+
+            if (textView.getText().length() <= 0) return;
+
             Navigation.findNavController(l).navigate(R.id.action_navigation_home_to_movieDetailFragment);
         });
 
