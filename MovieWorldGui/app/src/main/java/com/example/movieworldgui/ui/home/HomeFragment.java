@@ -14,18 +14,18 @@ import com.example.movieworldgui.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
+    private SelectedMovieViewModel selectedMovieViewModel;
     private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        selectedMovieViewModel = new ViewModelProvider(getActivity()).get(SelectedMovieViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s));
+        final TextView textView = binding.selectedMovie;
+        selectedMovieViewModel.getText().observe(getViewLifecycleOwner(), s -> textView.setText(s.content));
 
         return root;
     }

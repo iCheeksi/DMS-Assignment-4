@@ -11,16 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.movieworldgui.databinding.ActivityMainBinding;
-import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
-import com.example.movieworldgui.ui.receiveticket.BluetoothSenderViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
@@ -32,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
-    private BluetoothSenderViewModel senderViewModel;
-    private SelectedTicketViewModel selectedTicket;
 
     public void shareTicket(String item) {
         new Thread(new ServerConnection(item)).start();
@@ -48,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        senderViewModel = new ViewModelProvider(this).get(BluetoothSenderViewModel.class);
-        selectedTicket = new ViewModelProvider(this).get(SelectedTicketViewModel.class);
 
         setContentView(binding.getRoot());
         BottomNavigationView navView = findViewById(R.id.nav_view);
