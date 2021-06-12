@@ -5,12 +5,14 @@
  */
 package movierestfulservice;
 
+import java.io.Serializable;
+
 /**
  *
  * @author User
  */
-public class Ticket {
-    private String Moviename, DeviceID, MovieDate, Duration, seatNumber;
+public class Ticket implements Serializable {
+    private String Moviename, DeviceID, MovieDate, Duration, SeatNumber;
     
     public Ticket(){}
     
@@ -19,7 +21,7 @@ public class Ticket {
         DeviceID = deviceID;
         MovieDate = movieDate;
         Duration = duration;
-        seatNumber = seating;
+        SeatNumber = seating;
     }
     
     public void setMovieName(String movieName){
@@ -55,11 +57,11 @@ public class Ticket {
     }
     
     public void setSeating(String seating){
-        this.seatNumber = seating;
+        this.SeatNumber = seating;
     }
     
     public String getSeating(){
-        return this.seatNumber;
+        return this.SeatNumber;
     }
     
     public String listJsonString(){

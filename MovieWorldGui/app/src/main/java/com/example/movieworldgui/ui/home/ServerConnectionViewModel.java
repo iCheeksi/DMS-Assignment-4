@@ -19,7 +19,7 @@ public class ServerConnectionViewModel extends ViewModel {
     public MutableLiveData<String> getAddress() {
         if (address == null) {
             address = new MutableLiveData<>();
-            address.setValue("host:9999");
+            address.setValue("192.168.0.15:8080");
         }
 
         return address;

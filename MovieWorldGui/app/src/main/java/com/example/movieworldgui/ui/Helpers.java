@@ -55,14 +55,15 @@ public class Helpers {
 
                 if (response.isSuccessful()) {
 
+                    host.sendToastMessage("Ticket saved on the server");
                 } else {
-                    host.sendToastFromChildThread("Sorry we can't save the ticket on the server");
+                    host.sendToastMessage("Sorry we can't save the ticket on the server");
                 }
             }
 
             @Override
             public void onFailure(Call<TicketApiModel> call, Throwable t) {
-                host.sendToastFromChildThread("Sorry we can't save the ticket on the server");
+                host.sendToastMessage("Sorry we can't save the ticket on the server");
             }
         });
     }
