@@ -18,7 +18,6 @@ import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.FragmentDashboardBinding;
 import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import static android.app.Activity.RESULT_CANCELED;
 
@@ -41,7 +40,7 @@ public class DashboardFragment extends Fragment {
         selectedTicketViewModel.getItem().observe(getViewLifecycleOwner(), value -> {
 
             if (value != null) {
-                selectedTicket.setText(value.getMoviename());
+                selectedTicket.setText(value.getMovieName());
             } else {
                 selectedTicket.setText("");
             }

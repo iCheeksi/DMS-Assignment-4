@@ -63,7 +63,7 @@ public class OwnedTicketFragment extends Fragment {
         View root = binding.getRoot();
 
         ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
-        Helpers.getTicketsAsync(api.requestTickets(BluetoothAdapter.getDefaultAdapter().getAddress()), ownedTicketViewModel);
+        Helpers.getTicketsAsync(api.requestTickets(BluetoothAdapter.getDefaultAdapter().getName()), ownedTicketViewModel);
 
         if (root instanceof RecyclerView) {
             Context context = root.getContext();

@@ -37,7 +37,7 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).getMoviename());
+        holder.mContentView.setText(mValues.get(position).getMovieName());
 
         holder.mContentView.setOnClickListener(l -> {
             SelectedTicketViewModel viewModel = new ViewModelProvider(parent.getActivity()).get(SelectedTicketViewModel.class);

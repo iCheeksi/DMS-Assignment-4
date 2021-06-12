@@ -10,29 +10,20 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.movieworldgui.api.ApiMethods;
-import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.ActivityMainBinding;
 import com.example.movieworldgui.ui.Helpers;
-import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -231,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                                 TicketApiModel temp = (TicketApiModel) message;
 
                                 ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
-                                TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),temp.getMoviename());
+                                TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),temp.getMovieName());
 
                                 Call<TicketApiModel> request = api.requestPostTicket(ticket);
                                 Helpers.postTicketAsync(request,host,ownedTicketViewModel,ticket);

@@ -1,12 +1,10 @@
 package com.example.movieworldgui.api;
 
-import java.io.Serializable;
-
-public class TicketApiModel implements Serializable {
+public class TicketApiModel {
 
     private String Id;
     private String DeviceID; //can be name or MAC address
-    private String Moviename;
+    private String MovieName;
     private String MovieDate;
     private String Duration;
     private String SeatNumber;
@@ -17,11 +15,11 @@ public class TicketApiModel implements Serializable {
     public TicketApiModel(String id, String deviceId, String movieName) {
         Id = id;
         DeviceID = deviceId;
-        Moviename = movieName;
+        MovieName = movieName;
     }
 
     public TicketApiModel(String name){
-        Moviename = name;
+        MovieName = name;
     }
 
     public String getID() { return Id; }
@@ -30,7 +28,7 @@ public class TicketApiModel implements Serializable {
         return DeviceID;
     }
 
-    public String getMoviename() {
-        return Moviename;
+    public String getMovieName() {
+        return MovieName;
     }
 }

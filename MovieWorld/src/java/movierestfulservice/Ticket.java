@@ -12,13 +12,13 @@ import java.io.Serializable;
  * @author User
  */
 public class Ticket implements Serializable {
-    private String Id, Moviename, DeviceID, MovieDate, Duration, SeatNumber;
+    private String Id, MovieName, DeviceID, MovieDate, Duration, SeatNumber;
     
     public Ticket(){}
     
     public Ticket(String id,String movieName, String deviceID, String movieDate, String duration, String seating){
         Id = id;
-        Moviename = movieName;
+        MovieName = movieName;
         DeviceID = deviceID;
         MovieDate = movieDate;
         Duration = duration;
@@ -26,11 +26,11 @@ public class Ticket implements Serializable {
     }
     
     public void setMovieName(String movieName){
-        this.Moviename = movieName;
+        this.MovieName = movieName;
     }
     
     public String getMovieName(){
-        return this.Moviename;
+        return this.MovieName;
     }
     
     public void setDeviceID(String deviceID){
