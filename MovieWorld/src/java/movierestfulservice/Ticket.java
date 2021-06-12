@@ -71,7 +71,7 @@ public class Ticket implements Serializable {
     
     public String listJsonString(){
         StringBuilder buffer = new StringBuilder();
-        buffer.append("\"Id\":\"").append(this.getID()).append("\",");
+        buffer.append("{\"Id\":\"").append(this.getID()).append("\",");
         buffer.append("\"MovieName\":\"").append(this.getMovieName()).append("\",");
         buffer.append("\"DeviceID\":\"").append(this.getDeviceID()).append("\",");
         buffer.append("\"MovieDate\":\"").append(this.getMovieDate()).append("\",");
