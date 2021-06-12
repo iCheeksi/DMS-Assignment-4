@@ -16,8 +16,11 @@ import android.view.ViewGroup;
 import com.example.movieworldgui.R;
 import com.example.movieworldgui.api.ApiMethods;
 import com.example.movieworldgui.api.MovieApiModel;
+import com.example.movieworldgui.databinding.FragmentMovieListBinding;
+import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,54 +70,17 @@ public class MovieFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
+        FragmentMovieListBinding binding = FragmentMovieListBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(ServerConnectionViewModel.class);
 
-        ApiMethods api = new Retrofit.Builder().baseUrl("http://" + viewModel.getAddress().getValue())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(ApiMethods.class);
+        View root = binding.getRoot();
 
-        return sendRequestAsync(api.requestMovies(), view);
-    }
+        ApiMethods api = Helpers.api(viewModel.getAddress().getValue());
+        Helpers.sendRequestAsync(api.requestMovies(),viewModel);
 
-    private View sendRequestAsync(Call<List<MovieApiModel>> request, View view) {
-
-        List<MovieApiModel> items = new ArrayList<>();
-
-        request.enqueue(new Callback<List<MovieApiModel>>() {
-
-            @Override
-            public void onResponse(Call<List<MovieApiModel>> call,
-                                   Response<List<MovieApiModel>> response) {
-
-                if (response.isSuccessful()) {
-
-                    items.addAll(response.body());
-                } else {
-                    System.out.println("Response unsuccessful: " + response.message());
-                    items.add(new MovieApiModel("Sorry we can't get movies right now :("));
-                }
-                viewModel.getMovies().setValue(items);
-                SetupRecyclerViewContent(view);
-            }
-
-            @Override
-            public void onFailure(Call<List<MovieApiModel>> call, Throwable t) {
-                System.out.println("Failed request: " + t.getMessage());
-                items.add(new MovieApiModel("Sorry we can't get movies right now :("));
-                viewModel.getMovies().setValue(items);
-                SetupRecyclerViewContent(view);
-            }
-        });
-
-        return view;
-    }
-
-    private void SetupRecyclerViewContent(View view) {
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        if (root instanceof RecyclerView) {
+            Context context = root.getContext();
+            RecyclerView recyclerView = (RecyclerView) root;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -124,7 +90,10 @@ public class MovieFragment extends Fragment {
             viewModel.getMovies().observe(getViewLifecycleOwner(), values -> {
                 recyclerView.setAdapter(new MovieRecyclerViewAdapter(values, requireParentFragment()));
             });
-
         }
+
+        return root;
     }
+
+
 }

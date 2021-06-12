@@ -15,5 +15,5 @@ public interface ApiMethods {
     Call<List<MovieApiModel>> requestMovies();
 
     @GET("MovieWorld/movieworldservice/details/{movie}")
-    Call<MovieApiModel> requestMovieDetail(@Path("movie") String movieName);
+    Call<MovieDetailApiModel> requestMovieDetail(@Path("movie") String movieName);
 }
