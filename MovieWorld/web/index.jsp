@@ -18,5 +18,14 @@
             <p/>
             <a href="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/details/Titanic">Get Titanic movie details</a>
             <p />
+            <a href="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/movies/ticket">View booked movie tickets here</a>
+            <p />
+            <form action="<%= response.encodeURL(request.getContextPath())%>/movieworldservice/movies/ticket" method="POST">
+                <p>
+                    Movie to book a ticket:
+                    <input type="text" name="Ticket"/>
+                </p>
+                <input type="submit" value="Book ticket"/>
+            </form>
     </body>
 </html>

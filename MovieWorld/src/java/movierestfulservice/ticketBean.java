@@ -5,10 +5,29 @@
  */
 package movierestfulservice;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+
 /**
  *
- * @author User
+ * @author Shelby Mun 19049176
  */
+@Singleton
 public class ticketBean {
+    private List<Movie> ticket;
     
+    @PostConstruct
+    public void bookTickets(){
+        ticket = new ArrayList<>();
+    }
+    
+    public void addTicket(Movie movie){
+        ticket.add(movie);
+    }
+    
+    public List<Movie> getTicket(){
+        return ticket;
+    }
 }
