@@ -4,20 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
 
 public class SelectedMovieViewModel extends ViewModel {
 
-    private MutableLiveData<PlaceholderMovies.MovieItem> movie;
+    private MutableLiveData<MovieApiModel> movie;
 
     public SelectedMovieViewModel() {
     }
 
-    public MutableLiveData<PlaceholderMovies.MovieItem> getItem() {
+    public MutableLiveData<MovieApiModel> getItem() {
 
         if (movie == null){
             movie = new MutableLiveData<>();
-            movie.setValue(new PlaceholderMovies.MovieItem("","",""));
+            movie.setValue(new MovieApiModel(""));
         }
 
         return movie;
