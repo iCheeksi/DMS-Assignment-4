@@ -16,18 +16,18 @@ import javax.ejb.Singleton;
  */
 @Singleton
 public class ticketBean {
-    private List<Movie> ticket;
+    private List<Movie> tickets;
     
     @PostConstruct
     public void bookTickets(){
-        ticket = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
     
     public void addTicket(Movie movie){
-        ticket.add(movie);
+        tickets.add(movie);
     }
     
     public List<Movie> getTicket(){
-        return ticket;
+        return tickets;
     }
 }

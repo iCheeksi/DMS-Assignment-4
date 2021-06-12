@@ -24,7 +24,7 @@ public class bookTicketBean {
         Movie movie = MovieBean.getMovie(movieName);
         boolean ticketBooked = false;
         for(Movie movies : TicketBean.getTicket()){
-            if(movie.getName().equalsIgnoreCase(movieName)){
+            if(movies.getName().equalsIgnoreCase(movieName)){
                 ticketBooked = true;
             }
         }

@@ -25,7 +25,7 @@ import javax.ws.rs.core.MultivaluedMap;
 public class movieResources {
     
     @EJB
-    private movieBean moviebean;
+    private movieBean Moviebean;
     @EJB
     private ticketBean TicketBean;
     @EJB
@@ -38,7 +38,7 @@ public class movieResources {
     public String getAllMovies(){
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
-        List<Movie> allMovies = moviebean.getMovies();
+        List<Movie> allMovies = Moviebean.getMovies();
         for(int i = 0; i < allMovies.size(); i++){
             buffer.append(allMovies.get(i).listJSONString());
             if(i != allMovies.size() - 1){
