@@ -105,7 +105,6 @@ public class movieResources {
         StringBuilder buffer = new StringBuilder();
 
         List<Ticket> tickets = TicketBean.getSavedTickets();
-
         ArrayList<Ticket> filtered = new ArrayList<>(tickets);
         filtered.removeIf(t -> !t.getDeviceID().equalsIgnoreCase(deviceId));
 

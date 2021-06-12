@@ -1,6 +1,8 @@
 package com.example.movieworldgui.api;
 
-public class TicketApiModel {
+import java.io.Serializable;
+
+public class TicketApiModel implements Serializable {
 
     private String Id;
     private String DeviceID; //can be name or MAC address

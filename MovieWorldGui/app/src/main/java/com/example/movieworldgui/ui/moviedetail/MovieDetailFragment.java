@@ -86,7 +86,7 @@ public class MovieDetailFragment extends Fragment {
         binding.buyFromDetail.setOnClickListener(l -> {
 
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
-            TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(), BluetoothAdapter.getDefaultAdapter().getAddress(),item.getName());
+            TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(), BluetoothAdapter.getDefaultAdapter().getName(),item.getName());
 
             Call<TicketApiModel> request = api.requestPostTicket(ticket);
             Helpers.postTicketAsync(request,(MainActivity)getActivity(),ownedTickets,ticket);

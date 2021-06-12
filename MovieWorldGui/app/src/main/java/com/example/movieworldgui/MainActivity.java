@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                                 TicketApiModel temp = (TicketApiModel) message;
 
                                 ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
-                                TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),temp.getMovieName());
+                                TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getName(),temp.getMovieName());
 
                                 Call<TicketApiModel> request = api.requestPostTicket(ticket);
                                 Helpers.postTicketAsync(request,host,ownedTicketViewModel,ticket);
