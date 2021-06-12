@@ -15,8 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.movieworldgui.MainActivity;
+import com.example.movieworldgui.api.ApiMethods;
+import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.FragmentDashboardBinding;
+import com.example.movieworldgui.ui.Helpers;
+import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -24,6 +28,7 @@ import static android.app.Activity.RESULT_CANCELED;
 public class DashboardFragment extends Fragment {
 
     private SelectedTicketViewModel selectedTicketViewModel;
+    private ServerConnectionViewModel serverConnectionViewModel;
     private FragmentDashboardBinding binding;
 
     @Override
@@ -31,6 +36,7 @@ public class DashboardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         selectedTicketViewModel = new ViewModelProvider(requireActivity()).get(SelectedTicketViewModel.class);
+        serverConnectionViewModel = new ViewModelProvider(requireActivity()).get(ServerConnectionViewModel.class);
         OwnedTicketViewModel ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -72,10 +78,9 @@ public class DashboardFragment extends Fragment {
             TicketApiModel usedTicket = selectedTicketViewModel.getItem().getValue();
             if (usedTicket == null || usedTicket.getID().length() <= 0) return;
 
-//TODO - delete in api
+            ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
+            Helpers.deleteTicketAsync(api.requestDeleteTicket(usedTicket.getID()), (MainActivity) getActivity(), ownedTickets, usedTicket);
             selectedTicketViewModel.getItem().setValue(null);
-
-            host.sendToastMessage("Ticket used successfully.");
         });
 
         return root;
@@ -90,7 +95,7 @@ public class DashboardFragment extends Fragment {
 
             TicketApiModel sharedTicket = selectedTicketViewModel.getItem().getValue();
             if (sharedTicket == null || sharedTicket.getID().length() <= 0) return;
-            
+
             shareTicket(sharedTicket);
         }
     }

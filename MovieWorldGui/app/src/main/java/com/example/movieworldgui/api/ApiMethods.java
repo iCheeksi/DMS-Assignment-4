@@ -22,4 +22,7 @@ public interface ApiMethods {
 
     @POST("MovieWorld/movieworldservice/movies/ticket")
     Call<TicketApiModel> requestPostTicket(@Body TicketApiModel ticket);
+
+    @POST("MovieWorld/movieworldservice/movies/ticket/delete/{id}")
+    Call<String> requestDeleteTicket(@Path("id") String id);
 }

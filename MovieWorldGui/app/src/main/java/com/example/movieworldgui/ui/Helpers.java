@@ -95,6 +95,31 @@ public class Helpers {
         });
     }
 
+    public static void deleteTicketAsync(Call<String> request,MainActivity host, OwnedTicketViewModel viewModel, TicketApiModel ticket) {
+        request.enqueue(new Callback<String>() {
+
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                if (response.isSuccessful()) {
+
+                    List<TicketApiModel> ownedTickets = viewModel.getItems().getValue();
+                    ownedTickets.remove(ticket);
+                    viewModel.getItems().setValue(ownedTickets);
+
+                    host.sendToastMessage("Ticket successfully used.");
+                } else {
+                    host.sendToastMessage("Sorry we can't use the ticket on the server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                host.sendToastMessage("Sorry we can't use the ticket on the server");
+            }
+        });
+    }
+
     public static ApiMethods api(String hostAddress) {
         return new Retrofit.Builder().baseUrl("http://" + hostAddress)
                 .addConverterFactory(ScalarsConverterFactory.create())
