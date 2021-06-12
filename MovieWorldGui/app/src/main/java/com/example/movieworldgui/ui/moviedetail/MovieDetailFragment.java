@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.R;
+import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.databinding.FragmentMovieDetailBinding;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies;
@@ -41,14 +42,14 @@ public class MovieDetailFragment extends Fragment {
 
         selectedMovieViewModel.getItem().observe(getViewLifecycleOwner(), s ->
         {
-            header.setText(s.content);
-            details.setText(s.details);
+            header.setText(s.getName());
+            details.setText(s.getGenre());
         });
 
-        PlaceholderMovies.MovieItem item = selectedMovieViewModel.getItem().getValue();
+        MovieApiModel item = selectedMovieViewModel.getItem().getValue();
         binding.buyFromDetail.setOnClickListener(l -> {
             //TODO - send it off to the api. create a toast depending on the result of api request
-            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.content + " ticket", item.details);
+            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.getName() + " ticket", item.getGenre());
             PlaceholderTickets.addItem(newTicket);
             ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
 
@@ -62,12 +63,4 @@ public class MovieDetailFragment extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        selectedMovieViewModel = new ViewModelProvider(this).get(SelectedMovieViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

@@ -4,10 +4,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.databinding.FragmentMovieBinding;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies.MovieItem;
@@ -19,10 +21,10 @@ import java.util.List;
  */
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
-    private final List<MovieItem> mValues;
+    private final List<MovieApiModel> mValues;
     Fragment parent;
 
-    public MovieRecyclerViewAdapter(List<MovieItem> items, Fragment parent) {
+    public MovieRecyclerViewAdapter(List<MovieApiModel> items, Fragment parent) {
 
         mValues = items;
         this.parent = parent;
@@ -37,7 +39,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).getName());
 
         holder.mContentView.setOnClickListener(l -> {
             SelectedMovieViewModel viewModel = new ViewModelProvider(parent.getActivity()).get(SelectedMovieViewModel.class);
@@ -52,7 +54,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mContentView;
-        public MovieItem mItem;
+        public MovieApiModel mItem;
 
         public ViewHolder(FragmentMovieBinding binding) {
             super(binding.getRoot());
