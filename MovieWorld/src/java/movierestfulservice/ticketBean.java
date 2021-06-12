@@ -17,17 +17,27 @@ import javax.ejb.Singleton;
 @Singleton
 public class ticketBean {
     private List<Movie> tickets;
+    private List<Ticket> savedTickets;
     
     @PostConstruct
     public void bookTickets(){
         tickets = new ArrayList<>();
+        savedTickets = new ArrayList<>();
     }
     
     public void addTicket(Movie movie){
         tickets.add(movie);
     }
     
+    public void saveTicket(Ticket ticket){
+        savedTickets.add(ticket);
+    }
+    
     public List<Movie> getTicket(){
         return tickets;
+    }
+      
+    public List<Ticket> getSavedTickets(){
+        return savedTickets;
     }
 }

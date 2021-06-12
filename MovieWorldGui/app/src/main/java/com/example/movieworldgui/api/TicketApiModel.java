@@ -13,7 +13,8 @@ public class TicketApiModel implements Serializable {
 
     public TicketApiModel(){}
 
-    public TicketApiModel(String deviceId, String movieName){
+    public TicketApiModel(String id, String deviceId, String movieName){
+        Id = id;
         DeviceID = deviceId;
         Moviename = movieName;
     }

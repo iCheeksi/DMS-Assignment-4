@@ -6,6 +6,7 @@ package movierestfulservice;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -22,87 +23,96 @@ import javax.ws.rs.core.MultivaluedMap;
  *
  * @author Shelby Mun 19049176
  */
-
 @Named
 @Path("/movies")
 public class movieResources {
-    
+
     @EJB
     private movieBean Moviebean;
     @EJB
     private ticketBean TicketBean;
     @EJB
     private bookTicketBean BookTicketBean;
-    
-    public movieResources(){};
+
+    public movieResources() {
+    }
+
+    ;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllMovies(){
+    public String getAllMovies() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
         List<Movie> allMovies = Moviebean.getMovies();
-        for(int i = 0; i < allMovies.size(); i++){
+        for (int i = 0; i < allMovies.size(); i++) {
             buffer.append(allMovies.get(i).listJSONString());
-            if(i != allMovies.size() - 1){
+            if (i != allMovies.size() - 1) {
                 buffer.append(", ");
             }
         }
         buffer.append("]");
         return buffer.toString();
     }
-    
+
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public void addTicket(MultivaluedMap<String, String> formParams){
+    public void addTicket(MultivaluedMap<String, String> formParams) {
         String movieName = formParams.getFirst("Ticket");
         BookTicketBean.BookTicket(movieName);
     }
-    
+
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addTicket(String json){
+    public void addTicket(String json) {
 
-        System.out.println(json);
         JsonElement elem = JsonParser.parseString(json);
-        if(elem.isJsonObject()){
-            System.out.println(elem);
-            Gson gson = new Gson();
-           Ticket ticket = gson.fromJson(elem, Ticket.class);
-           
-        }
-//        BookTicketBean.AddTicket(ticket);
+        Ticket ticket = new Gson().fromJson(elem, Ticket.class);
+        BookTicketBean.SaveTicket(ticket);
     }
     
+    @POST
+    @Path("/ticket/delete/{id}")
+    public void deleteTicket(@PathParam("id")String id){
+        
+        List<Ticket> tickets = TicketBean.getSavedTickets();
+        
+        tickets.removeIf(t -> t.getID().equalsIgnoreCase(id));
+    }
+
     @GET
     @Path("/ticket")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listBookedTickets(){
+    public String listBookedTickets() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
         List<Movie> listMovies = TicketBean.getTicket();
-        for(int i = 0; i < listMovies.size(); i++){
+        for (int i = 0; i < listMovies.size(); i++) {
             buffer.append(listMovies.get(i).listJSONString());
-            if(i != listMovies.size()-1){
+            if (i != listMovies.size() - 1) {
                 buffer.append(",");
             }
         }
         buffer.append("]");
         return buffer.toString();
     }
-    
+
     @GET
     @Path("/ticket/{deviceId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String filterTickets(@PathParam("deviceId") String deviceId){
+    public String filterTickets(@PathParam("deviceId") String deviceId) {
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
-        List<Movie> listMovies = TicketBean.getTicket();
-        for(int i = 0; i < listMovies.size(); i++){
-            buffer.append(listMovies.get(i).listJSONString());
-            if(i != listMovies.size()-1){
+        List<Ticket> tickets = TicketBean.getSavedTickets();
+
+        ArrayList<Ticket> filtered = new ArrayList<>(tickets);
+        filtered.removeIf(t -> !t.getDeviceID().equalsIgnoreCase(deviceId));
+
+        for (int i = 0; i < filtered.size(); i++) {
+            buffer.append(tickets.get(i).listJsonString());
+            if (i != tickets.size() - 1) {
                 buffer.append(",");
             }
         }

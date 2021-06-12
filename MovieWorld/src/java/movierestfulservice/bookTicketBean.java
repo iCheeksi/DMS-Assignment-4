@@ -33,7 +33,7 @@ public class bookTicketBean {
         }
     }
     
-    public void AddTicket(Ticket ticket){
-        System.out.println(ticket.getMovieName());
+    public void SaveTicket(Ticket ticket){
+        TicketBean.saveTicket(ticket);
     }
 }

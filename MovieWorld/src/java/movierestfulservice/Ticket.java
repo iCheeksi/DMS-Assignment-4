@@ -12,11 +12,12 @@ import java.io.Serializable;
  * @author User
  */
 public class Ticket implements Serializable {
-    private String Moviename, DeviceID, MovieDate, Duration, SeatNumber;
+    private String Id, Moviename, DeviceID, MovieDate, Duration, SeatNumber;
     
     public Ticket(){}
     
-    public Ticket(String movieName, String deviceID, String movieDate, String duration, String seating){
+    public Ticket(String id,String movieName, String deviceID, String movieDate, String duration, String seating){
+        Id = id;
         Moviename = movieName;
         DeviceID = deviceID;
         MovieDate = movieDate;
@@ -34,6 +35,10 @@ public class Ticket implements Serializable {
     
     public void setDeviceID(String deviceID){
         this.DeviceID = deviceID;
+    }
+    
+    public String getID(){
+        return this.Id;
     }
     
     public String getDeviceID(){

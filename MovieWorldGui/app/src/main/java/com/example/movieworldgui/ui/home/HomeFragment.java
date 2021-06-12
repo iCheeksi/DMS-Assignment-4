@@ -61,14 +61,11 @@ public class HomeFragment extends Fragment {
 
             if (selectedMovie.getText().length() <= 0) return;
 
-            //TODO - send it off to the api. create a toast depending on the result of api request
-
-
             MovieApiModel item = selectedMovieViewModel.getItem().getValue();
 
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
 
-            TicketApiModel ticket = new TicketApiModel(BluetoothAdapter.getDefaultAdapter().getName(),item.getName());
+            TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),item.getName());
 
             Call<TicketApiModel> request = api.requestPostTicket(ticket);
             Helpers.postTicketAsync(request,(MainActivity)getActivity());
