@@ -3,8 +3,8 @@ package com.example.movieworldgui.api;
 public class MovieDetailApiModel {
 
     private String MovieName;
-    private String MovieSummary;
-    private String MovieDate;
+    private String Summary;
+    private String Date;
 
     public MovieDetailApiModel(){}
 
@@ -13,10 +13,10 @@ public class MovieDetailApiModel {
     }
 
     public String getMovieSummary() {
-        return MovieSummary;
+        return Summary;
     }
 
     public String getMovieDate() {
-        return MovieDate;
+        return Date;
     }
 }

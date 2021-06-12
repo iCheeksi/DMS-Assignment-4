@@ -68,8 +68,8 @@ public class OwnedTicketFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            ownedTickets.getItems().observe(getViewLifecycleOwner(), a -> {
-                recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(a, requireParentFragment()));
+            ownedTickets.getItems().observe(getViewLifecycleOwner(), items -> {
+                recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(items, requireParentFragment()));
             });
         }
         return root;

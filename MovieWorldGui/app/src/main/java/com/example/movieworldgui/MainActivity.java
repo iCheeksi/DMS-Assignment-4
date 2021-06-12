@@ -10,9 +10,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -20,6 +23,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.movieworldgui.databinding.ActivityMainBinding;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -40,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         new Thread((new ClientConnection(device))).start();
         sendToastMessage("Receiving ticket.");
     }
-
     public void sendToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -58,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (bluetoothAdapter == null) {
-            sendToastFromChildThread("Your device has no bluetooth support");
+            sendToastMessage("Your device has no bluetooth support");
         } else {
             if (!bluetoothAdapter.isEnabled()) {
                 Intent enableBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_CANCELED) {
-            sendToastFromChildThread("Please accept the request to use the app");
+            sendToastMessage("Please accept the request to use the app");
         }
     }
 
