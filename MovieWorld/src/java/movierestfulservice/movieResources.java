@@ -3,6 +3,7 @@
  */
 package movierestfulservice;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import java.util.List;
@@ -62,12 +63,15 @@ public class movieResources {
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addTicket(String ticket){
+    public void addTicket(String json){
 
-        System.out.println(ticket);
-        JsonElement elem = JsonParser.parseString(ticket);
+        System.out.println(json);
+        JsonElement elem = JsonParser.parseString(json);
         if(elem.isJsonObject()){
             System.out.println(elem);
+            Gson gson = new Gson();
+           Ticket ticket = gson.fromJson(elem, Ticket.class);
+           
         }
 //        BookTicketBean.AddTicket(ticket);
     }
