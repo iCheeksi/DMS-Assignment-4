@@ -72,13 +72,12 @@ public class movieResources {
         Ticket ticket = new Gson().fromJson(elem, Ticket.class);
         BookTicketBean.SaveTicket(ticket);
     }
-    
+
     @POST
     @Path("/ticket/delete/{id}")
-    public void deleteTicket(@PathParam("id")String id){
-        
+    public void deleteTicket(@PathParam("id") String id) {
+
         List<Ticket> tickets = TicketBean.getSavedTickets();
-        
         tickets.removeIf(t -> t.getID().equalsIgnoreCase(id));
     }
 
@@ -104,12 +103,13 @@ public class movieResources {
     @Produces(MediaType.APPLICATION_JSON)
     public String filterTickets(@PathParam("deviceId") String deviceId) {
         StringBuilder buffer = new StringBuilder();
-        buffer.append("[");
+
         List<Ticket> tickets = TicketBean.getSavedTickets();
 
         ArrayList<Ticket> filtered = new ArrayList<>(tickets);
         filtered.removeIf(t -> !t.getDeviceID().equalsIgnoreCase(deviceId));
 
+        buffer.append("[");
         for (int i = 0; i < filtered.size(); i++) {
             buffer.append(tickets.get(i).listJsonString());
             if (i != tickets.size() - 1) {
@@ -117,6 +117,7 @@ public class movieResources {
             }
         }
         buffer.append("]");
+        
         return buffer.toString();
     }
 }
