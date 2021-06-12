@@ -78,8 +78,6 @@ public class MovieDetailFragment extends Fragment {
                     host.sendToastMessage("Sorry we weren't able to get movie details from the server.");
                 }
             });
-
-            header.setText(s.getName());
         });
 
         MovieApiModel item = selectedMovieViewModel.getItem().getValue();

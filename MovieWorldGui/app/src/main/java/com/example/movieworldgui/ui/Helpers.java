@@ -1,8 +1,11 @@
 package com.example.movieworldgui.ui;
 
+import com.example.movieworldgui.MainActivity;
 import com.example.movieworldgui.api.ApiMethods;
 import com.example.movieworldgui.api.MovieApiModel;
+import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
+import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Helpers {
 
-    public static void sendRequestAsync(Call<List<MovieApiModel>> request, ServerConnectionViewModel viewModel) {
+    public static void getMoviesAsync(Call<List<MovieApiModel>> request, ServerConnectionViewModel viewModel) {
 
         List<MovieApiModel> items = new ArrayList<>();
 
@@ -39,6 +42,27 @@ public class Helpers {
             public void onFailure(Call<List<MovieApiModel>> call, Throwable t) {
                 items.add(new MovieApiModel("Sorry we can't get movies right now :("));
                 viewModel.getMovies().setValue(items);
+            }
+        });
+    }
+
+    public static void postTicketAsync(Call<TicketApiModel> request, MainActivity host) {
+
+        request.enqueue(new Callback<TicketApiModel>() {
+
+            @Override
+            public void onResponse(Call<TicketApiModel> call, Response<TicketApiModel> response) {
+
+                if (response.isSuccessful()) {
+
+                } else {
+                    host.sendToastFromChildThread("Sorry we can't save the ticket on the server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TicketApiModel> call, Throwable t) {
+                host.sendToastFromChildThread("Sorry we can't save the ticket on the server");
             }
         });
     }

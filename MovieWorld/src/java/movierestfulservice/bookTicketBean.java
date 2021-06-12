@@ -32,4 +32,8 @@ public class bookTicketBean {
             TicketBean.addTicket(movie);
         }
     }
+    
+    public void AddTicket(Ticket ticket){
+        
+    }
 }

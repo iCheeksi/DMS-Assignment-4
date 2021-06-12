@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -60,16 +61,33 @@ public class movieResources {
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addTicket(String movieJSON){
-        StringTokenizer token = new StringTokenizer(movieJSON, "\"");
-        String movieName = token.nextToken();
-        BookTicketBean.BookTicket(movieName);
+    public void addTicket(Ticket ticket){
+
+        System.out.println(ticket.getMovieName());
+        BookTicketBean.AddTicket(ticket);
     }
     
     @GET
     @Path("/ticket")
     @Produces(MediaType.APPLICATION_JSON)
     public String listBookedTickets(){
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("[");
+        List<Movie> listMovies = TicketBean.getTicket();
+        for(int i = 0; i < listMovies.size(); i++){
+            buffer.append(listMovies.get(i).listJSONString());
+            if(i != listMovies.size()-1){
+                buffer.append(",");
+            }
+        }
+        buffer.append("]");
+        return buffer.toString();
+    }
+    
+    @GET
+    @Path("/ticket/{deviceId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String filterTickets(@PathParam("deviceId") String deviceId){
         StringBuilder buffer = new StringBuilder();
         buffer.append("[");
         List<Movie> listMovies = TicketBean.getTicket();

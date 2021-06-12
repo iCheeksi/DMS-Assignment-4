@@ -13,22 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.movieworldgui.R;
 import com.example.movieworldgui.api.ApiMethods;
-import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.databinding.FragmentMovieListBinding;
 import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A fragment representing a list of Items.
@@ -76,7 +64,7 @@ public class MovieFragment extends Fragment {
         View root = binding.getRoot();
 
         ApiMethods api = Helpers.api(viewModel.getAddress().getValue());
-        Helpers.sendRequestAsync(api.requestMovies(),viewModel);
+        Helpers.getMoviesAsync(api.requestMovies(),viewModel);
 
         if (root instanceof RecyclerView) {
             Context context = root.getContext();
