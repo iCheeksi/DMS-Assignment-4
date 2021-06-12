@@ -111,8 +111,8 @@ public class movieResources {
 
         buffer.append("[");
         for (int i = 0; i < filtered.size(); i++) {
-            buffer.append(tickets.get(i).listJsonString());
-            if (i != tickets.size() - 1) {
+            buffer.append(filtered.get(i).listJsonString());
+            if (i != filtered.size() - 1) {
                 buffer.append(",");
             }
         }
