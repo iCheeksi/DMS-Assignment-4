@@ -2,21 +2,21 @@ package com.example.movieworldgui.api;
 
 public class MovieDetailApiModel {
 
-    private String movieName;
-    private String movieSummary;
-    private String movieDate;
+    private String MovieName;
+    private String MovieSummary;
+    private String MovieDate;
 
     public MovieDetailApiModel(){}
 
     public String getMovieName() {
-        return movieName;
+        return MovieName;
     }
 
     public String getMovieSummary() {
-        return movieSummary;
+        return MovieSummary;
     }
 
     public String getMovieDate() {
-        return movieDate;
+        return MovieDate;
     }
 }

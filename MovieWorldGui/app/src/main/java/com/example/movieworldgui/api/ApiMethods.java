@@ -8,6 +8,9 @@ import retrofit2.http.*;
 
 public interface ApiMethods {
 
+    @GET("MovieWorld/")
+    Call<String> testConnection();
+
     @GET("MovieWorld/movieworldservice/movies")
     Call<List<MovieApiModel>> requestMovies();
 

@@ -2,27 +2,31 @@ package com.example.movieworldgui.api;
 
 public class MovieApiModel {
 
-    private String name;
-    private String distributor;
-    private String genre;
-    private int year;
+    private String Name;
+    private String Distributor;
+    private String Genre;
+    private int Year;
 
-    public MovieApiModel(){}
+    public MovieApiModel() {
+    }
 
+    public MovieApiModel(String name) {
+        this.Name = name;
+    }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public String getDistributor() {
-        return distributor;
+        return Distributor;
     }
 
     public String getGenre() {
-        return genre;
+        return Genre;
     }
 
     public int getYear() {
-        return year;
+        return Year;
     }
 }
