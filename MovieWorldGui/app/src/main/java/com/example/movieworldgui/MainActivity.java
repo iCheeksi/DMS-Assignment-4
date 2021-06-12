@@ -14,13 +14,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.movieworldgui.api.ApiMethods;
+import com.example.movieworldgui.api.MovieApiModel;
+import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.ActivityMainBinding;
+import com.example.movieworldgui.ui.Helpers;
+import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
+import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
+import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,12 +39,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.UUID;
 
+import retrofit2.Call;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
     private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
+    private MainActivity host;
+    private ActivityMainBinding binding;
+    private ServerConnectionViewModel serverConnectionViewModel;
+    private OwnedTicketViewModel ownedTicketViewModel;
 
-    public void shareTicket(PlaceholderTickets.TicketItem item) {
+    public void shareTicket(TicketApiModel item) {
         new Thread(new ServerConnection(item)).start();
         sendToastMessage("Sending ticket.");
     }
@@ -45,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread((new ClientConnection(device))).start();
         sendToastMessage("Receiving ticket.");
     }
+
     public void sendToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -59,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        host = this;
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        serverConnectionViewModel = new ViewModelProvider(this).get(ServerConnectionViewModel.class);
+        ownedTicketViewModel = new ViewModelProvider(this).get(OwnedTicketViewModel.class);
 
         setContentView(binding.getRoot());
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -91,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
 
     private class ServerConnection extends Thread {
         private final BluetoothServerSocket serverSocket;
-        private final PlaceholderTickets.TicketItem sentItem;
+        private final TicketApiModel sentItem;
 
-        public ServerConnection(PlaceholderTickets.TicketItem item) {
+        public ServerConnection(TicketApiModel item) {
 
             sentItem = item;
             BluetoothServerSocket temp = null;
@@ -140,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        private void sendMessage(BluetoothSocket socket, PlaceholderTickets.TicketItem item) {
+        private void sendMessage(BluetoothSocket socket, TicketApiModel item) {
 
             new Thread(() -> {
                 try {
@@ -210,15 +227,14 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Object message = input.readObject();
 
-                            if (message instanceof PlaceholderTickets.TicketItem) {
-                                // TODO - send this to the api
-                                PlaceholderTickets.TicketItem temp = (PlaceholderTickets.TicketItem) message;
+                            if (message instanceof TicketApiModel) {
+                                TicketApiModel temp = (TicketApiModel) message;
 
-                                PlaceholderTickets.TicketItem newTicket =
-                                        new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), temp.content, temp.details);
-                                PlaceholderTickets.addItem(newTicket);
+                                ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
+                                TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),temp.getMoviename());
 
-                                sendToastFromChildThread("Shared ticket received successfully.");
+                                Call<TicketApiModel> request = api.requestPostTicket(ticket);
+                                Helpers.postTicketAsync(request,host,ownedTicketViewModel,ticket);
                             }
                             closeConnection();
                             break;

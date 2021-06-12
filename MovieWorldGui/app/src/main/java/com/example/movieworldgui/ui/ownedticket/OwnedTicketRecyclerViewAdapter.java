@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketBinding;
 import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets.TicketItem;
@@ -19,10 +20,10 @@ import java.util.List;
  */
 public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTicketRecyclerViewAdapter.ViewHolder> {
 
-    private final List<TicketItem> mValues;
+    private final List<TicketApiModel> mValues;
     Fragment parent;
 
-    public OwnedTicketRecyclerViewAdapter(List<TicketItem> items, Fragment parent) {
+    public OwnedTicketRecyclerViewAdapter(List<TicketApiModel> items, Fragment parent) {
         mValues = items;
         this.parent = parent;
     }
@@ -36,7 +37,7 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).getMoviename());
 
         holder.mContentView.setOnClickListener(l -> {
             SelectedTicketViewModel viewModel = new ViewModelProvider(parent.getActivity()).get(SelectedTicketViewModel.class);
@@ -51,7 +52,7 @@ public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mContentView;
-        public TicketItem mItem;
+        public TicketApiModel mItem;
 
         public ViewHolder(FragmentOwnedTicketBinding binding) {
             super(binding.getRoot());

@@ -17,6 +17,9 @@ public interface ApiMethods {
     @GET("MovieWorld/movieworldservice/details/{movie}")
     Call<MovieDetailApiModel> requestMovieDetail(@Path("movie") String movieName);
 
+    @GET("MovieWorld/movieworldservice/movies/ticket/{deviceId}")
+    Call<List<TicketApiModel>> requestTickets(@Path("deviceId") String deviceId);
+
     @POST("MovieWorld/movieworldservice/movies/ticket")
     Call<TicketApiModel> requestPostTicket(@Body TicketApiModel ticket);
 }

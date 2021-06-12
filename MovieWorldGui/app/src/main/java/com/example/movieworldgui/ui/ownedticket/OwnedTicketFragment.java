@@ -1,5 +1,6 @@
 package com.example.movieworldgui.ui.ownedticket;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -13,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.movieworldgui.R;
+import com.example.movieworldgui.api.ApiMethods;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketListBinding;
-import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
+import com.example.movieworldgui.ui.Helpers;
+import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +28,8 @@ public class OwnedTicketFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OwnedTicketViewModel ownedTickets;
+    private OwnedTicketViewModel ownedTicketViewModel;
+    ServerConnectionViewModel serverConnectionViewModel;
 
     public OwnedTicketFragment() {
     }
@@ -55,9 +57,13 @@ public class OwnedTicketFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
+        ownedTicketViewModel = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
+        serverConnectionViewModel = new ViewModelProvider(requireActivity()).get(ServerConnectionViewModel.class);
         FragmentOwnedTicketListBinding binding = FragmentOwnedTicketListBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
+
+        ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
+        Helpers.getTicketsAsync(api.requestTickets(BluetoothAdapter.getDefaultAdapter().getAddress()), ownedTicketViewModel);
 
         if (root instanceof RecyclerView) {
             Context context = root.getContext();
@@ -68,7 +74,7 @@ public class OwnedTicketFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            ownedTickets.getItems().observe(getViewLifecycleOwner(), items -> {
+            ownedTicketViewModel.getItems().observe(getViewLifecycleOwner(), items -> {
                 recyclerView.setAdapter(new OwnedTicketRecyclerViewAdapter(items, requireParentFragment()));
             });
         }

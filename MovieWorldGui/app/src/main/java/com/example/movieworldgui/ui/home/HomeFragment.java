@@ -62,20 +62,11 @@ public class HomeFragment extends Fragment {
             if (selectedMovie.getText().length() <= 0) return;
 
             MovieApiModel item = selectedMovieViewModel.getItem().getValue();
-
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
-
             TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getAddress(),item.getName());
 
             Call<TicketApiModel> request = api.requestPostTicket(ticket);
-            Helpers.postTicketAsync(request,(MainActivity)getActivity());
-
-            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.getName() + " ticket", item.getGenre());
-            PlaceholderTickets.addItem(newTicket);
-            ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
-
-            MainActivity host = (MainActivity) getActivity();
-            host.sendToastMessage("Ticket bought successfully");
+            Helpers.postTicketAsync(request,(MainActivity)getActivity(),ownedTickets,ticket);
         });
 
         binding.viewDetails.setOnClickListener(l -> {
@@ -99,9 +90,7 @@ public class HomeFragment extends Fragment {
                     if (response.isSuccessful()) {
 
                         serverConnectionViewModel.isConnected().setValue(true);
-
                         disableServerConnectionPrompt();
-                        host.sendToastMessage("Server connection successful.");
                         Helpers.getMoviesAsync(api.requestMovies(), serverConnectionViewModel);
                         selectedMovie.setText("");
 

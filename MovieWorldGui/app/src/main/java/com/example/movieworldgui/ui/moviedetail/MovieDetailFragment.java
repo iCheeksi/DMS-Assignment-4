@@ -1,5 +1,6 @@
 package com.example.movieworldgui.ui.moviedetail;
 
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.example.movieworldgui.R;
 import com.example.movieworldgui.api.ApiMethods;
 import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.api.MovieDetailApiModel;
+import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.FragmentMovieDetailBinding;
 import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
@@ -82,12 +84,12 @@ public class MovieDetailFragment extends Fragment {
 
         MovieApiModel item = selectedMovieViewModel.getItem().getValue();
         binding.buyFromDetail.setOnClickListener(l -> {
-            //TODO - send it off to the api. create a toast depending on the result of api request
-            PlaceholderTickets.TicketItem newTicket = new PlaceholderTickets.TicketItem(UUID.randomUUID().toString(), item.getName() + " ticket", item.getGenre());
-            PlaceholderTickets.addItem(newTicket);
-            ownedTickets.getItems().setValue(PlaceholderTickets.ITEMS);
 
-            host.sendToastMessage("Ticket bought successfully");
+            ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
+            TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(), BluetoothAdapter.getDefaultAdapter().getAddress(),item.getName());
+
+            Call<TicketApiModel> request = api.requestPostTicket(ticket);
+            Helpers.postTicketAsync(request,(MainActivity)getActivity(),ownedTickets,ticket);
         });
 
         binding.backHome.setOnClickListener(l -> {
