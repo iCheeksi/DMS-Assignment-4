@@ -3,8 +3,9 @@
  */
 package movierestfulservice;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -61,10 +62,14 @@ public class movieResources {
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addTicket(Ticket ticket){
+    public void addTicket(String ticket){
 
-        System.out.println(ticket.getMovieName());
-        BookTicketBean.AddTicket(ticket);
+        System.out.println(ticket);
+        JsonElement elem = JsonParser.parseString(ticket);
+        if(elem.isJsonObject()){
+            System.out.println(elem);
+        }
+//        BookTicketBean.AddTicket(ticket);
     }
     
     @GET
