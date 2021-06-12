@@ -34,6 +34,6 @@ public class bookTicketBean {
     }
     
     public void AddTicket(Ticket ticket){
-        
+        System.out.println(ticket.getMovieName());
     }
 }
