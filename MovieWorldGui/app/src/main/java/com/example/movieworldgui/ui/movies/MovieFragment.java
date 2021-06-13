@@ -18,8 +18,8 @@ import com.example.movieworldgui.databinding.FragmentMovieListBinding;
 import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 
-/**
- * A fragment representing a list of Items.
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class MovieFragment extends Fragment {
 

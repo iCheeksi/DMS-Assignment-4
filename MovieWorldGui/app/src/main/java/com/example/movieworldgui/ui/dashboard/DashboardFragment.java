@@ -25,6 +25,9 @@ import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
 
 import static android.app.Activity.RESULT_CANCELED;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class DashboardFragment extends Fragment {
 
     private SelectedTicketViewModel selectedTicketViewModel;
@@ -65,6 +68,7 @@ public class DashboardFragment extends Fragment {
             }
 
             if (bluetoothAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
+                // send request to make the phone discoverable
                 Intent serveBluetooth = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
                 serveBluetooth.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
                 startActivityForResult(serveBluetooth, 1);

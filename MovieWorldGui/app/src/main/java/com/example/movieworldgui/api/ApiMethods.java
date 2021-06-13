@@ -5,7 +5,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.*;
 
-
+/***
+ *  Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public interface ApiMethods {
 
     @GET("MovieWorld/")

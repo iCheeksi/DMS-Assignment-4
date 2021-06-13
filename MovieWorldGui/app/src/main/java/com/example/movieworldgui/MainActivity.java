@@ -32,6 +32,9 @@ import java.util.UUID;
 
 import retrofit2.Call;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class MainActivity extends AppCompatActivity {
 
     private UUID appBlueToothID = UUID.fromString("1ccb43a8-34fd-49d6-a8fa-acf1b480c28c");
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 temp = bluetoothAdapter.listenUsingRfcommWithServiceRecord("MovieWorldApp", appBlueToothID);
             } catch (IOException e) {
-                Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong when we were setting up the bluetooth connection", e);
+                Log.e(MainActivity.class.getSimpleName(), "Error with Bluetooth connection setup", e);
                 sendToastFromChildThread("Sorry something went wrong when we were setting up the bluetooth connection");
             }
             serverSocket = temp;
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                 } catch (IOException e) {
-                    Log.e(MainActivity.class.getSimpleName(), "Sorry the other device was unable to connect ", e);
+                    Log.e(MainActivity.class.getSimpleName(), "Error with client connection ", e);
                     sendToastFromChildThread("Sorry the other device was unable to connect");
                     closeConnection();
                     break;
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 temp = sendingDevice.createRfcommSocketToServiceRecord(appBlueToothID);
             } catch (IOException e) {
-                Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong when we were setting up the bluetooth connection", e);
+                Log.e(MainActivity.class.getSimpleName(), "Error connecting to the server", e);
                 sendToastFromChildThread("Sorry something went wrong when we were setting up the bluetooth connection");
             }
 
@@ -190,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (socket != null) socket.connect();
             } catch (IOException connException) {
-                Log.e(MainActivity.class.getSimpleName(), "Sorry we can't connect to the other device", connException);
+                Log.e(MainActivity.class.getSimpleName(), "Error connecting to the server", connException);
                 sendToastFromChildThread("Sorry we can't connect to the other device");
                 closeConnection();
 
@@ -224,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                                 ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
                                 TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(),BluetoothAdapter.getDefaultAdapter().getName(),temp.getMovieName());
 
+                                //Send the received ticket from the bluetooth to the server
                                 Call<TicketApiModel> request = api.requestPostTicket(ticket);
                                 Helpers.postTicketAsync(request,host,ownedTicketViewModel,ticket);
                             }
@@ -231,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 
                         } catch (ClassNotFoundException e) {
-                            Log.e(MainActivity.class.getSimpleName(), "Sorry something went wrong while we were getting the shared ticket", e);
+                            Log.e(MainActivity.class.getSimpleName(), "Error with reading the server's output", e);
                             sendToastFromChildThread("Sorry we can't get the shared ticket this time.");
                         }
                     }

@@ -19,8 +19,8 @@ import com.example.movieworldgui.databinding.FragmentOwnedTicketListBinding;
 import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 
-/**
- * A fragment representing a list of Items.
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class OwnedTicketFragment extends Fragment {
 
@@ -62,6 +62,7 @@ public class OwnedTicketFragment extends Fragment {
         FragmentOwnedTicketListBinding binding = FragmentOwnedTicketListBinding.inflate(inflater,container,false);
         View root = binding.getRoot();
 
+        //get a user's tickets on the server
         ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
         Helpers.getTicketsAsync(api.requestTickets(BluetoothAdapter.getDefaultAdapter().getName()), ownedTicketViewModel);
 

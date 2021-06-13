@@ -7,9 +7,8 @@ package movierestfulservice;
 
 import java.io.Serializable;
 
-/**
- *
- * @author User
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class Ticket implements Serializable {
     private String Id, MovieName, DeviceID, MovieDate, Duration, SeatNumber;

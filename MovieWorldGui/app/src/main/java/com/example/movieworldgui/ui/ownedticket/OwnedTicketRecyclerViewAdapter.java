@@ -9,14 +9,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movieworldgui.api.TicketApiModel;
-import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 import com.example.movieworldgui.databinding.FragmentOwnedTicketBinding;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets.TicketItem;
+import com.example.movieworldgui.ui.dashboard.SelectedTicketViewModel;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link TicketItem}.
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class OwnedTicketRecyclerViewAdapter extends RecyclerView.Adapter<OwnedTicketRecyclerViewAdapter.ViewHolder> {
 

@@ -5,9 +5,8 @@
  */
 package movierestfulservice;
 
-/**
- *
- * @author Shelby Mun 19049176
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class MovieDetails {
     private String movieName, movieSummary, movieDate;

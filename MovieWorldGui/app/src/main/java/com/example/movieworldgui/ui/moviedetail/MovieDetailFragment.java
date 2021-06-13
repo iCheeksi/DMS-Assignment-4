@@ -26,7 +26,6 @@ import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
 import com.example.movieworldgui.ui.home.ServerConnectionViewModel;
 import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,12 +35,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class MovieDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//options menu needed to be enabled on the fragment for the top arrow to work
+
+        //options menu needed to be enabled on the fragment for the top arrow to work
         setHasOptionsMenu(true);
         OwnedTicketViewModel ownedTickets = new ViewModelProvider(requireActivity()).get(OwnedTicketViewModel.class);
         SelectedMovieViewModel selectedMovieViewModel = new ViewModelProvider(requireActivity()).get(SelectedMovieViewModel.class);
@@ -55,6 +58,7 @@ public class MovieDetailFragment extends Fragment {
         MainActivity host = (MainActivity) getActivity();
         selectedMovieViewModel.getItem().observe(getViewLifecycleOwner(), s ->
         {
+            //get movie details when a selected movie changes
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
             Call<MovieDetailApiModel> request =  api.requestMovieDetail(s.getName());
 
@@ -85,6 +89,7 @@ public class MovieDetailFragment extends Fragment {
         MovieApiModel item = selectedMovieViewModel.getItem().getValue();
         binding.buyFromDetail.setOnClickListener(l -> {
 
+            //send bought ticket to the server
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
             TicketApiModel ticket = new TicketApiModel(UUID.randomUUID().toString(), BluetoothAdapter.getDefaultAdapter().getName(),item.getName());
 
@@ -99,7 +104,6 @@ public class MovieDetailFragment extends Fragment {
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                System.out.println("BACK BUTTON PRESSED");
                 Navigation.findNavController(requireView()).navigate(R.id.action_movieDetailFragment_to_navigation_home);
             }
         };

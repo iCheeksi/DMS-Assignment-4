@@ -14,11 +14,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author Shelby Mun 19049176
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
-
 @Named
 @Path("/details")
 public class MovieDetailsResource {

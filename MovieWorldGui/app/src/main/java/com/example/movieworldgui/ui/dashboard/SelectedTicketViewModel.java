@@ -4,8 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.movieworldgui.api.TicketApiModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class SelectedTicketViewModel extends ViewModel {
     private MutableLiveData<TicketApiModel> item;
 

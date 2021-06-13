@@ -8,6 +8,9 @@ import com.example.movieworldgui.api.MovieApiModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ *  Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class ServerConnectionViewModel extends ViewModel {
     private MutableLiveData<String> address;
     private MutableLiveData<Boolean> connected;
@@ -19,7 +22,7 @@ public class ServerConnectionViewModel extends ViewModel {
     public MutableLiveData<String> getAddress() {
         if (address == null) {
             address = new MutableLiveData<>();
-            address.setValue("192.168.0.15:8080");
+            address.setValue("111.111.1.11:8080");
         }
 
         return address;

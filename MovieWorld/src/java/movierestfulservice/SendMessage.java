@@ -8,8 +8,6 @@ package movierestfulservice;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -19,9 +17,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-/**
- *
- * @author Shelby Mun 19049176
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class SendMessage {
 

@@ -19,9 +19,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
-/**
- *
- * @author Shelby Mun 19049176
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 @Named
 @Path("/movies")

@@ -1,23 +1,21 @@
 package com.example.movieworldgui.ui.movies;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.movieworldgui.api.MovieApiModel;
 import com.example.movieworldgui.databinding.FragmentMovieBinding;
 import com.example.movieworldgui.ui.home.SelectedMovieViewModel;
-import com.example.movieworldgui.ui.movies.placeholder.PlaceholderMovies.MovieItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link MovieItem}.
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 

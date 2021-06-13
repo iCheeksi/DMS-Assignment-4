@@ -12,9 +12,8 @@ import javax.ejb.Singleton;
 
 /**
  * Adding movie details with booking time available on singleton EJB. 
- * @author Shelby Mun 19049176
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
-
 @Singleton
 public class DetailedBean {
     private List<MovieDetails> detail;

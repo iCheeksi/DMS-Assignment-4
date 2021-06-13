@@ -23,7 +23,6 @@ import com.example.movieworldgui.api.TicketApiModel;
 import com.example.movieworldgui.databinding.FragmentHomeBinding;
 import com.example.movieworldgui.ui.Helpers;
 import com.example.movieworldgui.ui.ownedticket.OwnedTicketViewModel;
-import com.example.movieworldgui.ui.ownedticket.placeholder.PlaceholderTickets;
 
 import java.util.UUID;
 
@@ -31,6 +30,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class HomeFragment extends Fragment {
 
     private SelectedMovieViewModel selectedMovieViewModel;
@@ -78,6 +80,7 @@ public class HomeFragment extends Fragment {
         binding.serverConnect.setOnClickListener(l -> {
             if (serverConnectionViewModel.getAddress().getValue().isEmpty()) return;
 
+            // Test the connection to the server
             ApiMethods api = Helpers.api(serverConnectionViewModel.getAddress().getValue());
             api.testConnection().enqueue(new Callback<String>() {
 

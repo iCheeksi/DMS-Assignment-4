@@ -14,11 +14,9 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-/**
- *
- * @author Shelby Mun 19049176
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
  */
-
 @MessageDriven(activationConfig =
 {
    @ActivationConfigProperty(propertyName = "destinationLookup",

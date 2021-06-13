@@ -17,6 +17,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+/***
+ * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
+ */
 public class Helpers {
 
     public static void getMoviesAsync(Call<List<MovieApiModel>> request, ServerConnectionViewModel viewModel) {
@@ -120,6 +123,7 @@ public class Helpers {
         });
     }
 
+    //get a constructed api object to send requests
     public static ApiMethods api(String hostAddress) {
         return new Retrofit.Builder().baseUrl("http://" + hostAddress)
                 .addConverterFactory(ScalarsConverterFactory.create())
