@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package movierestfulservice;
+/*package movierestfulservice;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import javax.jms.TextMessage;
 
 /***
  * Author - Shelby Mun (19049176) & Angelo Ryndon (18028033)
- */
+ 
 public class SendMessage {
 
     private Connection connection;
@@ -77,4 +77,4 @@ public class SendMessage {
         sender.endConnection();
         System.out.println("Sending DONE!!!");
     }
-}
+}*/
