@@ -35,8 +35,6 @@ public class movieResources {
 
     public movieResources() {
     }
-
-    ;
     
     //Grab all the listed movies and put them in JSON format
     @GET
