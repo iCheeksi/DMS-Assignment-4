@@ -35,8 +35,6 @@ public class movieResources {
 
     public movieResources() {
     }
-
-    ;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
