@@ -51,6 +51,7 @@ public class Movie {
         this.year = year;
     } 
     
+    //Mathod to print movie details in JSON format
     public String listJSONString(){
         StringBuilder buffer = new StringBuilder();
         buffer.append("{ \"Name\":\"").append(this.getName()).append("\", ");

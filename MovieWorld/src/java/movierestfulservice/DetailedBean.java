@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Instead of using SQL, putting all the movie details in this Detailed bean to retrieve later using @GET 
  */
 package movierestfulservice;
 

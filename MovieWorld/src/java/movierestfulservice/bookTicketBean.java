@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Class to hold booked tickets. 
  */
 package movierestfulservice;
 
@@ -14,11 +12,15 @@ import javax.ejb.Stateless;
 @Stateless
 public class bookTicketBean {
     
+    //Grab MovieBean
     @EJB
     private movieBean MovieBean;
+    
+    //Grab ticketbean
     @EJB
     private ticketBean TicketBean;
     
+    //Method to check if the booking ticket is already on the list, if not add
     public void BookTicket(String movieName){
         Movie movie = MovieBean.getMovie(movieName);
         boolean ticketBooked = false;

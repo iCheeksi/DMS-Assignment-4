@@ -1,5 +1,5 @@
 /*
- * 
+ * Class to list all the movies and also filter results using gson
  */
 package movierestfulservice;
 
@@ -38,6 +38,7 @@ public class movieResources {
 
     ;
     
+    //Grab all the listed movies and put them in JSON format
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllMovies() {
@@ -54,6 +55,7 @@ public class movieResources {
         return buffer.toString();
     }
 
+    //Grab ticket name to add in BookTicket
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -62,6 +64,7 @@ public class movieResources {
         BookTicketBean.BookTicket(movieName);
     }
 
+    //List all the booked tickets in JSON format
     @POST
     @Path("/ticket")
     @Consumes(MediaType.APPLICATION_JSON)

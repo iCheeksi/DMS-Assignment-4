@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Class to print all the movie details 
  */
 package movierestfulservice;
 
@@ -21,11 +19,14 @@ import javax.ws.rs.core.MediaType;
 @Path("/details")
 public class MovieDetailsResource {
     
+    SendMessage send = new SendMessage();
+    
     @EJB
     private DetailedBean db;
     
     public MovieDetailsResource(){}
     
+    //Get method used to print movie details in JSON format
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{movie}")
